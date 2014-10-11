@@ -20,16 +20,17 @@ return [
 
 	'connections' => [
 
-		'mysql' => [
-			'driver'    => 'mysql',
-			'host'      => 'localhost',
-			'database'  => 'homestead',
-			'username'  => 'homestead',
-			'password'  => 'secret',
-			'charset'   => 'utf8',
-			'collation' => 'utf8_unicode_ci',
-			'prefix'    => '',
-		],
+        'mysql' => array(
+            'driver'    => 'mysql',
+            'host'      => 'localhost',
+            'database'  => 'laravel5',
+            'username'  => 'root',
+            'password'  => 'root',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_czech_ci',
+            'unix_socket'   => '/Applications/MAMP/tmp/mysql/mysql.sock',
+            'prefix'    => '',
+        ),
 
 		'pgsql' => [
 			'driver'   => 'pgsql',

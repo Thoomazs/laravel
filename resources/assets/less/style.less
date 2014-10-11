@@ -1,0 +1,26 @@
+@import "includes/helpers/lesshat";
+@import "includes/helpers/main";
+
+
+@blue: rgb(83, 173, 216);
+@green: rgb(157, 171, 55);
+
+
+@import "includes/helpers/form";
+
+@import "includes/layouts/header";
+@import "includes/layouts/footer";
+
+body {
+  background: @backgroundGray;
+  color: @textColor;
+}
+
+form.form-basic {
+    .form-group:last-child {
+        margin-bottom: 0;
+    }
+}
+
+
+@import "includes/pages/error";

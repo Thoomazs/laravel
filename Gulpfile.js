@@ -1,3 +1,4 @@
+
 var elixir = require('./vendor/laravel/elixir/Elixir');
 
 /*
@@ -12,8 +13,11 @@ var elixir = require('./vendor/laravel/elixir/Elixir');
  */
 
 elixir(function(mix) {
-    mix.less("bootstrap.less")
-       .routes()
-       .events()
+    mix.less("style.less")
+        .styles(["css/bootstrap.min.css","css/font-awesome.min.css","css/style.css"])
+        .version("css/all.min.css")
+        .scripts([""])
+       //.routes()
+       //.events()
        .phpUnit();
 });

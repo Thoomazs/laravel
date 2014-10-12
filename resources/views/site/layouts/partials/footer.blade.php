@@ -10,7 +10,7 @@
         <div class="col-sm-6 text-right muted">
             webové stránky vytvořil
             <a class="cynet muted" href="http://www.cynet.cz" target="_blank">
-                <img src="{{ asset('assets/img/footer/logo_cynet.png') }}" alt="cyNet.cz"/>
+                <img src="{{ asset('img/footer/logo_cynet.png') }}" alt="cyNet.cz"/>
             </a>
         </div>
     </div>

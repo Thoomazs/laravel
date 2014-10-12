@@ -1,4 +1,4 @@
-@extends('site.layouts.default')
+@extends('site.layouts.master')
 
 @section('title')
 {{{ Lang::get('user/user.login') }}} |
@@ -11,34 +11,31 @@
 
 <div class="col-sm-6 col-sm-offset-3">
 
-    {{ Form::open(array('url' => URL::route('login'), 'method' => 'POST')) }}
+    {!! Form::open(array('route' => 'auth.login', 'method' => 'POST', 'autocomplete' => 'off', 'novalidate', 'class' => 'form-basic')) }}
+        <fieldset>
+            <legend>Login</legend>
 
-    <fieldset>
-        <legend> {{{ Lang::get('button.login') }}}</legend>
+        <!-- Email Form Input -->
 
-        <div class="form-group @if ($errors->has('email')) has-error @endif">
+        <div class="form-group @if($errors->has('email')) has-error @endif">
+            {!! Form::label('email', 'Email:') !!}
 
-            {{ Form::label('email', Lang::get('user/user.email'), array()) }}
+            {!! $errors->first('email', '<div class="form-error">:message</div>') !!}
 
-            @if ($errors->has('email'))
-            <div class="form-error"> {{ $errors->first('email') }}</div>
-            @endif
-
-            {{ Form::text('email', Input::old('email'), array('class' => 'form-control')) }}
-
+            {!! Form::email('email', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
         </div>
 
-        <div class="form-group @if ($errors->has('password')) has-error @endif">
 
-            {{ Form::label('password', Lang::get('user/user.password'), array()) }}
+        <!-- Password Form Input -->
 
-            @if ($errors->has('password'))
-            <div class="form-error"> {{ $errors->first('password') }}</div>
-            @endif
+        <div class="form-group @if($errors->has('password')) has-error @endif">
+            {!! Form::label('password', 'Password:') !!}
 
-            {{ Form::password('password', array('class' => 'form-control')) }}
+            {!! $errors->first('password', '<div class="form-error">:message</div>') !!}
 
+            {!! Form::password('password', ['class' => 'form-control', 'autocomplete' => 'off']) !!}
         </div>
+
 
 
         <div class="row">
@@ -57,11 +54,19 @@
         </div>
 
 
-        {{ Form::button( Lang::get('button.login'), array('type' => 'submit', 'class' => 'btn btn-success btn-block')) }}
+        <!-- Login Form Input -->
+
+        <div class="form-group">
+            {!! Form::button('Login', ['type' => 'submit', 'class' => 'btn btn-primary form-control']) !!}
+        </div>
 
     </fieldset>
 
-    {{ Form::close() }}
+
+
+        </fieldset>
+    {!! Form::close() !!}
+
 </div>
 
 @stop

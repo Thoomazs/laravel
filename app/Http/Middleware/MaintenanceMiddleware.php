@@ -36,7 +36,7 @@ class MaintenanceMiddleware {
 	{
 		if ($this->app->isDownForMaintenance())
 		{
-			return new Response('Be right back!', 503);
+			return response( view('error.maintenance'), 503);
 		}
 
 		return $next($request);

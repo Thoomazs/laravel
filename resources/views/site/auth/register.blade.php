@@ -1,4 +1,4 @@
-@extends('site.layouts.default')
+@extends('site.layouts.master')
 
 @section('content')
 
@@ -6,66 +6,77 @@
 
        <div class="well">
 
-            {!! Form::open(array( 'method' => 'POST', 'autocomplete' => 'off', 'novalidate')) !!}
+            {!! Form::open([ 'route' => 'auth.register', 'method' => 'POST', 'autocomplete' => 'off', 'class' => 'form-basic' ]) !!}
                 <fieldset>
-                    <legend> {{{ Lang::get('user.register') }}}</legend>
+                    <legend>Register</legend>
+
+                        {{ var_dump($errors) }}
+
+                        @if ($errors->any())
+                            <ul>
+                                @foreach($errors->all()as $error)
+                                    <li> {{ $error }} </li>
+                                @endforeach
+                            </ul>
+                        @endif
+
 
                         <!-- Firstname Form Input -->
 
                         <div class="form-group @if($errors->has('firstname')) has-error @endif">
-                            {{ Form::label('firstname', Lang::get('user.firstname').':') }}
+                            {!! Form::label('firstname', 'Firstname:') !!}
 
-                            @if ($errors->has('firstname')) <div class="form-error"> {{ $errors->first('firstname') }}</div> @endif
+                            {!! $errors->first('firstname', '<div class="form-error">:message</div>') !!}
 
-                            {{ Form::text('firstname', Input::old('firstname'), ['class' => 'form-control', 'autocomplete' => 'off']) }}
+                            {!! Form::text('firstname', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
                         </div>
 
                         <!-- Lastname Form Input -->
 
                         <div class="form-group @if($errors->has('lastname')) has-error @endif">
-                            {{ Form::label('lastname', Lang::get('user.lastname').':') }}
+                            {!! Form::label('lastname', 'Lastname:') !!}
 
-                            @if ($errors->has('lastname')) <div class="form-error"> {{ $errors->first('lastname') }}</div> @endif
+                            {!! $errors->first('lastname', '<div class="form-error">:message</div>') !!}
 
-                            {{ Form::text('lastname', Input::old('lastname'), ['class' => 'form-control', 'autocomplete' => 'off']) }}
+                            {!! Form::text('lastname', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
                         </div>
 
+                        <!-- Email Form Input -->
 
-                       <!-- Email Form Input -->
+                        <div class="form-group @if($errors->has('email')) has-error @endif">
+                            {!! Form::label('email', 'Email:') !!}
 
-                       <div class="form-group @if($errors->has('email')) has-error @endif">
-                           {!! Form::label('email', Lang::get('Email').':') !!}
+                            {!! $errors->first('email', '<div class="form-error">:message</div>') !!}
 
-                           @if ($errors->has('email')) <div class="form-error"> {{ $errors->first('email') }}</div> @endif
+                            {!! Form::text('email', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
+                        </div>
 
-                           {!! Form::text('email', Input::old('email'), ['class' => 'form-control', 'autocomplete' => 'off']) !!}
-                       </div>
+                        <!-- Password Form Input -->
 
-                       <!-- Password Form Input -->
+                        <div class="form-group @if($errors->has('password')) has-error @endif">
+                            {!! Form::label('password', 'Password:') !!}
 
-                       <div class="form-group @if($errors->has('password')) has-error @endif">
-                           {!! Form::label('password', Lang::get('Password').':') !!}
+                            {!! $errors->first('password', '<div class="form-error">:message</div>') !!}
 
-                           @if ($errors->has('password')) <div class="form-error"> {{ $errors->first('password') }}</div> @endif
+                            {!! Form::password('password', ['class' => 'form-control', 'autocomplete' => 'off']) !!}
+                        </div>
 
-                           {!! Form::password('password', ['class' => 'form-control', 'autocomplete' => 'off']) !!}
-                       </div>
+                        <!-- Password_confirmation Form Input -->
 
-                       <!-- Password_confirmation Form Input -->
+                        <div class="form-group @if($errors->has('password_confirmation')) has-error @endif">
+                            {!! Form::label('password_confirmation', 'Password_confirmation:') !!}
 
-                       <div class="form-group @if($errors->has('password_confirmation')) has-error @endif">
-                           {!! Form::label('password_confirmation', Lang::get('Password_confirmation').':') !!}
+                            {!! $errors->first('password_confirmation', '<div class="form-error">:message</div>') !!}
 
-                           @if ($errors->has('password_confirmation')) <div class="form-error"> {{ $errors->first('password_confirmation') }}</div> @endif
+                            {!! Form::password('password_confirmation', ['class' => 'form-control', 'autocomplete' => 'off']) !!}
+                        </div>
 
-                           {!! Form::password('password_confirmation', ['class' => 'form-control', 'autocomplete' => 'off']) !!}
-                       </div>
+                        <!-- Register Form Input -->
 
-                       <!-- Register Form Input -->
+                        <div class="form-group">
+                            {!! Form::button('Register', ['type' => 'submit', 'class' => 'btn btn-primary form-control']) !!}
+                        </div>
 
-                       <div class="form-group">
-                           {!! Form::button(Lang::get('user.register!'), ['type' => 'submit', 'class' => 'btn btn-primary form-control', 'autocomplete' => 'off']) !!}
-                       </div>
 
                 </fieldset>
             {!! Form::close() !!}

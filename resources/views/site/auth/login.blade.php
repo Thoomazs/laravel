@@ -1,4 +1,4 @@
-@extends('site.layouts.default')
+@extends('site.layouts.master')
 
 @section('content')
 
@@ -7,50 +7,73 @@
 
         <div class="well">
 
-            {!! Form::open(['method' => 'POST', 'autocomplete' => 'off', 'novalidate', 'class' => 'form-basic']) !!}
-                <fieldset>
-                    <legend> {{{ Lang::get('user.login') }}}</legend>
+            {!! Form::open(['route' => 'auth.login', 'method' => 'POST', 'autocomplete' => 'off', 'novalidate', 'class' => 'form-basic']) !!}
+                    <fieldset>
+                        <legend>Login</legend>
 
-                        <!-- Email Form Input -->
+@if(isset($error))
+{{ var_dump($error) }}
+@endif
 
-                        <div class="form-group @if($errors->has('email')) has-error @endif">
-                            {!! Form::label('email', Lang::get('Email').':') !!}
+@if ($errors->any())
+    <ul>
+        @foreach($errors->all()as $error)
+            <li> {{ $error }} </li>
+        @endforeach
+    </ul>
+@endif
 
-                            @if ($errors->has('email')) <div class="form-error"> {{ $errors->first('email') }}</div> @endif
+                    <!-- Email Form Input -->
 
-                            {!! Form::text('email', Input::old('email'), ['class' => 'form-control', 'autocomplete' => 'off']) !!}
-                        </div>
+                    <div class="form-group {{ $errors->has('email') ? 'has-error': '' }}">
+                        {!! Form::label('email', 'Email:') !!}
 
-                        <!-- Password Form Input -->
+                        {!! $errors->first('email', '<div class="form-error">:message</div>') !!}
 
-                        <div class="form-group @if($errors->has('password')) has-error @endif">
-                            {!! Form::label('password', Lang::get('Password').':') !!}
+                        {!! Form::email('email', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
+                    </div>
 
-                            @if ($errors->has('password')) <div class="form-error"> {{ $errors->first('password') }}</div> @endif
 
-                            {!! Form::password('password', ['class' => 'form-control', 'autocomplete' => 'off']) !!}
-                        </div>
+                    <!-- Password Form Input -->
 
-                        <!--  Remember Form Input -->
+                    <div class="form-group {{ $errors->has('password') ? 'has-error': '' }}">
+                        {!! Form::label('password', 'Password:') !!}
 
-                        <div class="form-group @if($errors->has('')) has-error @endif">
+                        {!! $errors->first('password', '<div class="form-error">:message</div>') !!}
+
+                        {!! Form::password('password', ['class' => 'form-control', 'autocomplete' => 'off']) !!}
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-sm-6">
                             <div class="checkbox">
                                 <label>
-                                    {{ Form::checkbox( 'remember_token' ) . Lang::get('user.remember') }}
+                                    {!! Form::checkbox( 'remember' ) !!}  Remember
                                 </label>
                             </div>
                         </div>
-
-
-                        <!-- Login Form Input -->
-
-                        <div class="form-group">
-                            {!! Form::button(Lang::get('user.login!'), ['type' => 'submit', 'class' => 'btn btn-primary form-control', 'autocomplete' => 'off']) !!}
+                        <div class="col-sm-6 text-right">
+                            <!--                    <button class="btn btn-link text-muted" type="button" onclick="document.login.submit();" name="forget-password" style="margin: 3px 0;">-->
+                            <!--                        zapomenuté heslo-->
+                            <!--                    </button>-->
                         </div>
+                    </div>
 
+
+                    <!-- Login Form Input -->
+
+                    <div class="form-group">
+                        {!! Form::button('Login', ['type' => 'submit', 'class' => 'btn btn-primary form-control']) !!}
+                    </div>
 
                 </fieldset>
-            {!! Form::close() !!}
+
+
+
+                    </fieldset>
+                {!! Form::close() !!}
 
         </div>
     </div>

@@ -44,10 +44,10 @@
                     </li>
                 @else
                     <li class="{{ ( Request::url() == URL::route('auth.login') ? ' active' : '') }}">
-                        <a href="{{ URL::route('auth.login') }}">{{{ Lang::get('user.login') }}}</a>
+                        <a href="{{ URL::route('auth.login') }}">Login</a>
                     </li>
                     <li class="{{ ( Request::url() == URL::route('auth.register') ? ' active' : '') }}">
-                        <a href="{{ URL::route('auth.register') }}">{{{ Lang::get('user.register')}}}</a>
+                        <a href="{{ URL::route('auth.register') }}">Register</a>
                     </li>
                 @endif
 

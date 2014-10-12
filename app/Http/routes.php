@@ -18,15 +18,21 @@
     |
     */
 
-    Route::group( [ 'prefix' => 'admin', 'before' => 'auth' ], function () {
+    Route::group( [ 'prefix' => 'admin' ], function ()
+    {
+
+        Route::bind( "users", function ( $id )
+        {
+            return App\User::find($id);
+        } );
 
         Route::resource( 'users', 'Admin\UsersController' );
 
-        Route::resource( 'product', 'Admin\ProductsController' );
+        //        Route::resource( 'product', 'Admin\ProductsController' );
 
-        Route::resource( 'log', 'Admin\LogController' );
+        Route::resource( 'log', 'Admin\LogController', [ 'only' => 'index' ] );
 
-        Route::get( '/', [ 'as'   => 'admin', 'uses' => 'Admin\AdminController@getWelcome' ] );
+        Route::get( '/', [ 'as' => 'admin', 'uses' => 'Admin\AdminController@getWelcome' ] );
     } );
 
 
@@ -38,20 +44,19 @@
     */
 
 
+    //    Route::controller( 'password', [ 'uses' => 'Auth\RemindersController'] );
 
-//    Route::controller( 'password', 'Auth\RemindersController' );
+    get( 'register', [ 'as' => 'auth.register', 'uses' => 'Auth\AuthController@showRegistrationForm' ] );
 
-    Route::get( 'register', [ 'as' => 'auth.register', 'uses' => 'Auth\AuthController@getRegister' ] );
+    post( 'register', 'Auth\AuthController@register' );
 
-    Route::post( 'register', [ 'uses' => 'Auth\AuthController@postRegister' ] );
+    get( 'login', [ 'as' => 'auth.login', 'uses' => 'Auth\AuthController@showLoginForm' ] );
 
-    Route::get( 'login', [ 'as' => 'auth.login', 'uses' => 'Auth\AuthController@getLogin' ] );
+    post( 'login', 'Auth\AuthController@login' );
 
-    Route::post( 'login', [ 'uses' => 'Auth\AuthController@postLogin' ] );
+    get( 'logout', [ 'as' => 'auth.logout', 'uses' => 'Auth\AuthController@logout' ] );
 
-    Route::get( 'logout', array( 'as' => 'auth.logout', 'uses' => 'Auth\AuthController@getLogout' ) );
-
-    Route::get( 'profile', array( 'as' => 'my-account.profile', 'uses' => 'Auth\MyAccountController@getProfile' ) );
+    get( 'profile', [ 'as' => 'my-account.profile', 'uses' => 'Auth\MyAccountController@getProfile' ] );
 
 
     /*
@@ -61,4 +66,5 @@
     |
     */
 
-    Route::get( '/', array( 'as' => 'home', 'uses' => 'HomeController@index' ) );
+    get( '/', array( 'as' => 'home', 'uses' => 'HomeController@index' ) );
+    post( '/', array( 'uses' => 'HomeController@postIndex' ) );

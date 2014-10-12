@@ -1,13 +1,13 @@
 <?php namespace App;
 
 use Illuminate\Auth\UserTrait;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Contracts\Auth\User as UserContract;
 use Illuminate\Contracts\Auth\Remindable as RemindableContract;
 use Illuminate\Support\Facades\Hash;
 
-class User extends Model implements UserContract, RemindableContract
+class User extends Eloquent implements UserContract, RemindableContract
 {
 
     use UserTrait, RemindableTrait;

@@ -22,7 +22,7 @@ return [
 
         'mysql' => array(
             'driver'    => 'mysql',
-            'host'      => 'localhost',
+            'host'      => 'localhost::8888',
             'database'  => 'laravel5',
             'username'  => 'root',
             'password'  => 'root',

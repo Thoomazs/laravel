@@ -1,7 +1,7 @@
 <div id="header-title">
     <div class="container">
 
-        <a href="{{{ URL::route('home') }}}">
+        <a href="{{{ route('home') }}}">
             <h1 class="pull-left">
 
                 <i class="fa fa-cube"></i> Starter App
@@ -21,8 +21,8 @@
 
         <ul class="nav navbar-nav">
             @section('nav')
-                <li class="{{ ( Request::url() == URL::route('home') ? 'active' : '' ) }}">
-                    <a href="{{{ URL::route('home') }}}">Home</a>
+                <li class="{{ ( Request::url() == route('home') ? 'active' : '' ) }}">
+                    <a href="{{{ route('home') }}}">Home</a>
                 </li>
             @show
         </ul>
@@ -33,21 +33,21 @@
                 @if (Auth::check())
 
                     <li>
-                        <a href="{{{ URL::to('admin') }}}">Admin Panel</a>
+                        <a href="{{{ route('admin') }}}">Admin Panel</a>
                     </li>
 
-                    <li class="{{ ( Request::url() == URL::route('my-account.profile') ? ' active' : '') }}">
-                        <a href="{{ URL::route('my-account.profile') }}">{{{ Auth::user()->name }}}</a>
+                    <li class="{{ ( Request::url() == route('my-account.profile') ? ' active' : '') }}">
+                        <a href="{{ route('my-account.profile') }}">{{{ Auth::user()->name }}}</a>
                     </li>
                     <li>
-                        <a href="{{ URL::route('auth.logout') }}">Logout</a>
+                        <a href="{{ route('auth.logout') }}">Logout</a>
                     </li>
                 @else
-                    <li class="{{ ( Request::url() == URL::route('auth.login') ? ' active' : '') }}">
-                        <a href="{{ URL::route('auth.login') }}">Login</a>
+                    <li class="{{ ( Request::url() == route('auth.login') ? ' active' : '') }}">
+                        <a href="{{ route('auth.login') }}">Login</a>
                     </li>
-                    <li class="{{ ( Request::url() == URL::route('auth.register') ? ' active' : '') }}">
-                        <a href="{{ URL::route('auth.register') }}">Register</a>
+                    <li class="{{ ( Request::url() == route('auth.register') ? ' active' : '') }}">
+                        <a href="{{ route('auth.register') }}">Register</a>
                     </li>
                 @endif
 

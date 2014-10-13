@@ -82,7 +82,7 @@ class AuthController {
 	 */
 	public function login(LoginRequest $request)
 	{
-		if ($this->auth->attempt($request->only('email', 'password')))
+		if ($this->auth->attempt($request->only('email', 'password'), $request->get("remember")))
 		{
 			return redirect()->route('home');
 		}

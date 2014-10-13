@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\User as UserContract;
 use Illuminate\Auth\Passwords\CanResetPasswordTrait;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Model implements UserContract, CanResetPasswordContract {
 
@@ -24,4 +25,18 @@ class User extends Model implements UserContract, CanResetPasswordContract {
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+    protected $fillable = array( 'firstname',
+                                 'lastname',
+                                 'email',
+                                 'password' );
+
+    public function getNameAttribute()
+    {
+        return $this->firstname." ".$this->lastname;
+    }
+
+    public function setPasswordAttribute( $password )
+    {
+        $this->attributes[ 'password' ] = Hash::make( $password );
+    }
 }

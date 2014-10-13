@@ -16,7 +16,7 @@
 
                         <!-- Firstname Form Input -->
 
-                        <div class="form-group @if($errors->has('firstname')) has-error @endif">
+                        <div class="form-group {{ $errors->has('firstname') ? 'has-error' : '' }}">
                             {!! Form::label('firstname', 'Firstname:') !!}
 
                             {!! $errors->first('firstname', '<div class="form-error">:message</div>') !!}
@@ -26,7 +26,7 @@
 
                         <!-- Lastname Form Input -->
 
-                        <div class="form-group @if($errors->has('lastname')) has-error @endif">
+                        <div class="form-group {{ $errors->has('lastname') ? 'has-error' : '' }}">
                             {!! Form::label('lastname', 'Lastname:') !!}
 
                             {!! $errors->first('lastname', '<div class="form-error">:message</div>') !!}
@@ -36,17 +36,17 @@
 
                         <!-- Email Form Input -->
 
-                        <div class="form-group @if($errors->has('email')) has-error @endif">
+                        <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                             {!! Form::label('email', 'Email:') !!}
 
                             {!! $errors->first('email', '<div class="form-error">:message</div>') !!}
 
-                            {!! Form::text('email', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
+                            {!! Form::email('email', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
                         </div>
 
-                        <!-- Password Form Input -->
+                        <!-- Password Form Password Input -->
 
-                        <div class="form-group @if($errors->has('password')) has-error @endif">
+                        <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
                             {!! Form::label('password', 'Password:') !!}
 
                             {!! $errors->first('password', '<div class="form-error">:message</div>') !!}
@@ -54,9 +54,9 @@
                             {!! Form::password('password', ['class' => 'form-control', 'autocomplete' => 'off']) !!}
                         </div>
 
-                        <!-- Password_confirmation Form Input -->
+                        <!-- Password_confirmation Form Password Input -->
 
-                        <div class="form-group @if($errors->has('password_confirmation')) has-error @endif">
+                        <div class="form-group {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
                             {!! Form::label('password_confirmation', 'Password_confirmation:') !!}
 
                             {!! $errors->first('password_confirmation', '<div class="form-error">:message</div>') !!}
@@ -64,11 +64,12 @@
                             {!! Form::password('password_confirmation', ['class' => 'form-control', 'autocomplete' => 'off']) !!}
                         </div>
 
-                        <!-- Register Form Input -->
+                        <!-- Register Form Submit -->
 
                         <div class="form-group">
                             {!! Form::button('Register', ['type' => 'submit', 'class' => 'btn btn-primary form-control']) !!}
                         </div>
+
 
 
                 </fieldset>

@@ -16,7 +16,11 @@
 
 <!-- CSS
 ================================================== -->
-<link rel="stylesheet" href="{{ elixir("css/all.min.css") }}"/>
+{{--<link rel="stylesheet" href="{{ elixir("css/all.min.css") }}"/>--}}
+
+<link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}"/>
+<link rel="stylesheet" href="{{ asset("css/font-awesome.min.css") }}"/>
+<link rel="stylesheet" href="{{ asset("css/style.css") }}"/>
 
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>

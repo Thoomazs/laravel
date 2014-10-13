@@ -1,5 +1,5 @@
 <!-- Basic Page Needs
-   ================================================== -->
+================================================== -->
 <meta charset="utf-8"/>
 <title>
     @section('title')
@@ -16,20 +16,17 @@
 
 <!-- CSS
 ================================================== -->
-<link rel="stylesheet" href="{{ elixir("all.min.css") }}"/>
+<link rel="stylesheet" href="{{ elixir("css/all.min.css") }}"/>
 
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
-{!! HTML::script('http://html5shim.googlecode.com/svn/trunk/html5.js') !!}
+<script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 
 <!-- Favicons
 ================================================== -->
 <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
 
-
 <!-- JS
 ================================================== -->
-{!! HTML::script('js/jQuery/jquery.min.js') !!}
-{!! HTML::script('js/bootstrap.min.js') !!}
-{!! HTML::script('js/Class/Ext_functions.js') !!}
+<script type="text/javascript" src="{{ elixir("js/all.min.js") }}"></script>

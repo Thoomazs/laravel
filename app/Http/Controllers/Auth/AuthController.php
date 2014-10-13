@@ -13,19 +13,19 @@ use App\User;
 class AuthController {
 
 	/**
-	 * The authenticator implementation.
+	 * The Guard implementation.
 	 *
-	 * @var Authenticator
+	 * @var Guard
 	 */
 	protected $auth;
 
 	/**
 	 * Create a new authentication controller instance.
 	 *
-	 * @param  Authenticator  $auth
+	 * @param  Guard  $auth
 	 * @return void
 	 */
-	public function __construct(Authenticator $auth)
+	public function __construct(Guard $auth)
 	{
 		$this->auth = $auth;
 	}
@@ -39,7 +39,7 @@ class AuthController {
 	 */
 	public function showRegistrationForm()
 	{
-		return view('auth.register');
+		return view('site.auth.register');
 	}
 
 	/**
@@ -50,11 +50,12 @@ class AuthController {
 	 * @param  RegisterRequest  $request
 	 * @return Response
 	 */
-	public function register(RegisterRequest $request)
+	public function register(RegisterRequest $request, User $user)
 	{
 		// Registration form is valid, create user...
+        $new_user = $user->create($request->all());
 
-		$this->auth->login($user);
+        $this->auth->login($new_user);
 
 		return redirect('/');
 	}
@@ -68,7 +69,7 @@ class AuthController {
 	 */
 	public function showLoginForm()
 	{
-		return view('auth.login');
+		return view('site.auth.login');
 	}
 
 	/**
@@ -83,10 +84,10 @@ class AuthController {
 	{
 		if ($this->auth->attempt($request->only('email', 'password')))
 		{
-			return redirect('/');
+			return redirect()->route('home');
 		}
 
-		return redirect('/login')->withErrors([
+		return redirect()->route('auth.login')->withErrors([
 			'email' => 'These credentials do not match our records.',
 		]);
 	}

@@ -5,7 +5,6 @@
         @include('site.layouts.partials.head')
     </head>
     <body>
-
         <header id="header">
             @include('site.layouts.partials.header')
         </header>

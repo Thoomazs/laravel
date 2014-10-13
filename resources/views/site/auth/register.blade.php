@@ -2,6 +2,9 @@
 
 @section('content')
 
+    {{-- TODO: quick fix --}}
+    <?php $errors = Session::has('errors') ? Session::get('errors') : $errors; ?>
+
    <div class="col-sm-6 col-sm-offset-3">
 
        <div class="well">
@@ -9,16 +12,6 @@
             {!! Form::open([ 'route' => 'auth.register', 'method' => 'POST', 'autocomplete' => 'off', 'class' => 'form-basic' ]) !!}
                 <fieldset>
                     <legend>Register</legend>
-
-                        {{ var_dump($errors) }}
-
-                        @if ($errors->any())
-                            <ul>
-                                @foreach($errors->all()as $error)
-                                    <li> {{ $error }} </li>
-                                @endforeach
-                            </ul>
-                        @endif
 
 
                         <!-- Firstname Form Input -->

@@ -1,3 +1,4 @@
+
 var elixir = require('./vendor/laravel/elixir/Elixir');
 
 /*
@@ -14,5 +15,6 @@ var elixir = require('./vendor/laravel/elixir/Elixir');
 elixir( function( mix ) {
     mix.less( "style.less" )
         .styles( ["css/bootstrap.min.css", "css/font-awesome.min.css", "css/style.css"] )
-        .version( "css/all.min.css" )
+        .scripts(['js/jquery/jquery.min.js','js/helpers/bootstrap.min.js', 'js/helpers/helpers.js'])
+        .version( ['css/all.min.css','js/all.min.js'] )
 } );

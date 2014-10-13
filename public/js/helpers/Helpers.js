@@ -1,4 +1,4 @@
-function Ext_functions() {
+function Helpers() {
 
     this.init = function() {
         var $this = this;
@@ -71,12 +71,14 @@ function Ext_functions() {
                     {
                         classes : "btn-default",
                         title   : "Zrušit",
-                        dismiss : true},
+                        dismiss : true
+                    },
                     {
                         href    : href,
                         classes : "btn-danger",
                         title   : "Provést",
-                        dismiss : false}
+                        dismiss : false
+                    }
                 ]
             } );
 
@@ -104,8 +106,7 @@ function Ext_functions() {
 
         // datepicker
         if ( $.fn.pickadate ) {
-            $( "input[data-toggle='datepicker']" ).pickadate( {
-            } );
+            $( "input[data-toggle='datepicker']" ).pickadate( {} );
         }
         if ( $.fn.pickatime ) {
             $( "input[data-toggle='timepicker']" ).pickatime( {
@@ -266,7 +267,8 @@ function Ext_functions() {
                     href    : "",
                     classes : "btn-default",
                     title   : "Ok",
-                    dismiss : true}
+                    dismiss : true
+                }
             ],
             header  : true,
             remove  : true
@@ -310,4 +312,4 @@ function Ext_functions() {
 }
 
 // vytvoreni globalni promenne
-var Ext = new Ext_functions();
+var Helper = new Helpers();

@@ -13,6 +13,6 @@ return [
 	|
 	*/
 
-	'debug' => false,
+	'debug' => true,
 
 ];

@@ -2,7 +2,8 @@
 
 @section('content')
 
-
+    {{-- TODO: quick fix --}}
+    <?php $errors = Session::has('errors') ? Session::get('errors') : $errors; ?>
     <div class="col-sm-6 col-sm-offset-3">
 
         <div class="well">
@@ -10,18 +11,6 @@
             {!! Form::open(['route' => 'auth.login', 'method' => 'POST', 'autocomplete' => 'off', 'novalidate', 'class' => 'form-basic']) !!}
                     <fieldset>
                         <legend>Login</legend>
-
-@if(isset($error))
-{{ var_dump($error) }}
-@endif
-
-@if ($errors->any())
-    <ul>
-        @foreach($errors->all()as $error)
-            <li> {{ $error }} </li>
-        @endforeach
-    </ul>
-@endif
 
                     <!-- Email Form Input -->
 

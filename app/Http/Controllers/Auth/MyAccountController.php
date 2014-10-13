@@ -11,7 +11,7 @@ class MyAccountController extends BaseController {
      */
     public function getProfile()
     {
-        return view('site.auth.profile');
+        return view('site.auth.profile')->withErrors("asdasd");
     }
 
 }

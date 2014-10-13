@@ -1,10 +1,15 @@
 <?php namespace App\Http\Controllers\Auth;
 
-use Illuminate\Contracts\Auth\Authenticator;
-use App\User;
+use Illuminate\Contracts\Auth\Guard;
+
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 
+use App\User;
+/**
+ * @Middleware("csrf")
+ * @Middleware("guest", except={"logout"})
+ */
 class AuthController {
 
 	/**
@@ -28,60 +33,68 @@ class AuthController {
 	/**
 	 * Show the application registration form.
 	 *
+	 * @Get("auth/register")
+	 *
 	 * @return Response
 	 */
 	public function showRegistrationForm()
 	{
-        return view('site.auth.register');
+		return view('auth.register');
 	}
 
 	/**
 	 * Handle a registration request for the application.
 	 *
+	 * @Post("auth/register")
+	 *
 	 * @param  RegisterRequest  $request
 	 * @return Response
 	 */
-	public function register(RegisterRequest $request, User $user)
+	public function register(RegisterRequest $request)
 	{
-        // Registration form is valid, create user...
-        $new_user = $user->create($request->all());
+		// Registration form is valid, create user...
 
-        $this->auth->login($new_user);
+		$this->auth->login($user);
 
-        return redirect('/');
+		return redirect('/');
 	}
 
 	/**
 	 * Show the application login form.
 	 *
+	 * @Get("auth/login")
+	 *
 	 * @return Response
 	 */
 	public function showLoginForm()
 	{
-        return view('site.auth.login');
+		return view('auth.login');
 	}
 
 	/**
 	 * Handle a login request to the application.
+	 *
+	 * @Post("auth/login")
 	 *
 	 * @param  LoginRequest  $request
 	 * @return Response
 	 */
 	public function login(LoginRequest $request)
 	{
-
 		if ($this->auth->attempt($request->only('email', 'password')))
 		{
 			return redirect('/');
 		}
 
-		return redirect()->back()->withErrors([
-			'email' => 'The credentials you entered did not match our records. Try again?'
+		return redirect('/login')->withErrors([
+			'email' => 'These credentials do not match our records.',
 		]);
 	}
 
 	/**
 	 * Log the user out of the application.
+	 *
+	 * @Get("auth/logout")
 	 *
 	 * @return Response
 	 */

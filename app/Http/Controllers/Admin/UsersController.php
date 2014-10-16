@@ -7,6 +7,13 @@ use App\Http\Requests\User\DeleteUserRequest;
 use App\User;
 use Symfony\Component\HttpFoundation\Session;
 
+/**
+ * Class UsersController
+ *
+ * @package App\Http\Controllers\Admin
+ * @Resource("admin/users", except="show")
+ *
+ */
 class UsersController extends AdminController
 {
 

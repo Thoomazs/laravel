@@ -2,6 +2,12 @@
 
 use App\Http\Controllers\Admin\AdminController;
 
+/**
+ * Class LogController
+ *
+ * @Resource("admin/log", only="index")
+ */
+
 class LogController extends AdminController {
 
 	/**

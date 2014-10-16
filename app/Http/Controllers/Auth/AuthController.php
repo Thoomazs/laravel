@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers\Auth;
 
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\BaseController;
 use Illuminate\Contracts\Auth\Guard;
 
 use App\Http\Requests\Auth\LoginRequest;
@@ -10,7 +10,7 @@ use App\User;
 /**
  * @Middleware("guest", except={"logout"})
  */
-class AuthController extends Controller {
+class AuthController extends BaseController {
 
 	/**
 	 * The Guard implementation.
@@ -33,7 +33,7 @@ class AuthController extends Controller {
 	/**
 	 * Show the application registration form.
 	 *
-	 * @Get("auth/register")
+	 * @Get("register", as="auth.register")
 	 *
 	 * @return Response
 	 */
@@ -45,7 +45,7 @@ class AuthController extends Controller {
 	/**
 	 * Handle a registration request for the application.
 	 *
-	 * @Post("auth/register")
+	 * @Post("register")
 	 *
 	 * @param  RegisterRequest  $request
 	 * @return Response
@@ -63,7 +63,7 @@ class AuthController extends Controller {
 	/**
 	 * Show the application login form.
 	 *
-	 * @Get("auth/login")
+	 * @Get("login", as="auth.login")
 	 *
 	 * @return Response
 	 */
@@ -75,7 +75,7 @@ class AuthController extends Controller {
 	/**
 	 * Handle a login request to the application.
 	 *
-	 * @Post("auth/login")
+	 * @Post("login")
 	 *
 	 * @param  LoginRequest  $request
 	 * @return Response
@@ -95,7 +95,7 @@ class AuthController extends Controller {
 	/**
 	 * Log the user out of the application.
 	 *
-	 * @Get("auth/logout")
+	 * @Get("logout", as="auth.logout")
 	 *
 	 * @return Response
 	 */

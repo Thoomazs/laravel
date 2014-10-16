@@ -1,14 +1,14 @@
 <?php namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\BaseController;
 use Illuminate\Contracts\Auth\PasswordBroker;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @Middleware("guest")
  */
-class PasswordController extends Controller {
+class PasswordController extends BaseController {
 
 	/**
 	 * The password broker implementation.

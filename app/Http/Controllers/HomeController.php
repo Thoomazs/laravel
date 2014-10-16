@@ -18,17 +18,16 @@ class HomeController extends BaseController
     |
     */
 
+    /**
+     *
+     * @Get("/", as="home")
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
 
         return view( 'site.pages.homepage' );
-    }
-
-    public function postIndex( IndexRequest $request) {
-
-        dd($request->all());
-        return redirect("/");
-
     }
 
 }

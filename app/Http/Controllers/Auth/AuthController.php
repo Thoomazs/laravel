@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Auth;
 
+use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Auth\Guard;
 
 use App\Http\Requests\Auth\LoginRequest;
@@ -7,10 +8,9 @@ use App\Http\Requests\Auth\RegisterRequest;
 
 use App\User;
 /**
- * @Middleware("csrf")
  * @Middleware("guest", except={"logout"})
  */
-class AuthController {
+class AuthController extends Controller {
 
 	/**
 	 * The Guard implementation.

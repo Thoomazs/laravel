@@ -26,7 +26,7 @@
         else $user = null;
 
 //        dd((int)$user);
-        $log->create( [ "level" => $level, "user_id" => 1, "message" => $message, "ip" => Request::getClientIp() ] );
+        $log->create( [ "level" => $level, "user_id" => 1, "message" => $message, "ip" => Request::ip() ] );
     } );
 
     Route::group( [ 'prefix' => 'admin' ], function ()

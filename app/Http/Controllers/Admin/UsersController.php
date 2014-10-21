@@ -1,11 +1,12 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Admin\AdminController;
+use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Requests\User\DeleteUserRequest;
+
 use App\User;
-use Symfony\Component\HttpFoundation\Session;
+use Illuminate\Support\Facades\Input;
 
 /**
  * Class UsersController
@@ -17,11 +18,19 @@ use Symfony\Component\HttpFoundation\Session;
 class UsersController extends AdminController
 {
 
+    /**
+     * @var User
+     */
     protected $user;
 
 
+    /**
+     * @param User $user
+     */
     function __construct( User $user )
     {
+        parent::__construct();
+
         $this->user = $user;
     }
 
@@ -32,15 +41,13 @@ class UsersController extends AdminController
      */
     public function index()
     {
-        $users = $this->user->all();
 
-        //        $s = Input::get( 's' );
-        //
-        //        if ( $s ) $users = $users->search( Input::get( 's' ) );
-        //
-        //        $users = $users->paginate( $this->_pagination );
-        //
-        //        Log::info( 'user index.' );
+        if ( ( $s = Input::get( 's' ) ) )
+        {
+            $this->user = $this->user->search( $s );
+        }
+
+        $users = $this->user->paginate( 1);
 
         return view( 'admin.users.index', compact( 'users' ) );
     }
@@ -52,6 +59,8 @@ class UsersController extends AdminController
      */
     public function create()
     {
+
+
         return view( 'admin.users.create' );
     }
 
@@ -62,9 +71,16 @@ class UsersController extends AdminController
      */
     public function store( CreateUserRequest $request )
     {
-        $this->user->create( $request->all() );
+        $user = $this->user->create( $this->_addSlug( $request->all() ) );
 
-        return redirect( route( "admin.users.index" ) );
+        if ( $user->id )
+        {
+            return redirect( route( "admin.users.index" ) );
+        }
+
+        return redirect()->back()->withErrors( [
+
+        ] );
     }
 
     /**
@@ -88,8 +104,12 @@ class UsersController extends AdminController
      */
     public function edit( User $user )
     {
+        if ( !$user->id )
+        {
+            return redirect()->route( 'admin.users.index' );
+        }
 
-        return view( 'admin.users.edit', compact('user'));
+        return view( 'admin.users.edit', compact( 'user' ) );
     }
 
     /**
@@ -101,9 +121,9 @@ class UsersController extends AdminController
      */
     public function update( UpdateUserRequest $request, User $user )
     {
-        $user->fill(compact($request->all()))->save();
+        $user->fill( compact( $request->all() ) )->save();
 
-        return redirect()->route("admin.users.index");
+        return redirect()->route( "admin.users.index" );
     }
 
     /**
@@ -113,14 +133,14 @@ class UsersController extends AdminController
      *
      * @return Response
      */
-    public function destroy( $id )
+    public function destroy( User $user )
     {
         // delete user
-        $this->user->find( $id )->delete();
+        $this->user->find( $user->id )->delete();
 
 
         // Was the user deleted?
-        $user = User::find( $id );
+        $user = User::find( $user->id );
         if ( empty( $user ) )
         {
             // OK
@@ -135,4 +155,25 @@ class UsersController extends AdminController
         return redirect( route( "admin.users.index" ) );
     }
 
+
+    /**
+     * @param array $user
+     *
+     * @return array
+     */
+    private function _addSlug( array $user )
+    {
+
+        $test_slug = $slug = $user[ "firstname" ]."-".$user[ "lastname" ];
+
+        $i = 0;
+        while ( $this->user->whereSlug( $test_slug )->first() )
+        {
+            $test_slug = $slug."-".++$i;
+        }
+
+        $user[ "slug" ] = $test_slug;
+
+        return $user;
+    }
 }

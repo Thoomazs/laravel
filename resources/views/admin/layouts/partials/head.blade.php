@@ -19,9 +19,9 @@
 
 <!-- CSS
 ================================================== -->
-{!! HTML::style('css/bootstrap.min.css') !!}
-{!! HTML::style('css/font-awesome.min.css') !!}
-{!! HTML::style('css/style-admin.css') !!}
+<link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}"/>
+<link rel="stylesheet" href="{{ asset("css/font-awesome.min.css") }}"/>
+<link rel="stylesheet" href="{{ asset("css/style-admin.css") }}"/>
 
 <!-- Favicons
 ================================================== -->
@@ -29,7 +29,7 @@
 
 <!-- JS
 ================================================== -->
-{!! HTML::script('js/jQuery/jquery.min.js') !!}
-{!! HTML::script('js//bootstrap.min.js') !!}
-{!! HTML::script('js/Class/Ext_functions.js') !!}
-{!! HTML::script('js/Admin.js') !!}
+<script type="text/javascript" src="{{ asset("js/jquery/jquery.min.js") }}"></script>
+<script type="text/javascript" src="{{ asset("js/helpers/bootstrap.min.js") }}"></script>
+<script type="text/javascript" src="{{ asset("js/helpers/Helpers.js") }}"></script>
+<script type="text/javascript" src="{{ asset("js/admin.js") }}"></script>

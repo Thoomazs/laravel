@@ -2,7 +2,8 @@
 
 use Illuminate\Routing\Controller;
 
-class BaseController extends Controller {
+class BaseController extends Controller
+{
 
 
     function  __construct()

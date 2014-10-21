@@ -17,7 +17,7 @@
 
             @include("admin.users._form")
 
-            {!! Form::button( Lang::get('form.button.edit'), array('type' => 'submit', 'class' => 'btn btn-success btn-block')); !!}
+            {!! Form::button( 'Edit', array('type' => 'submit', 'class' => 'btn btn-success btn-block')); !!}
 
         </fieldset>
 

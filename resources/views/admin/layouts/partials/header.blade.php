@@ -1,16 +1,16 @@
 <div class="container">
 
-    <a class="navbar-brand" href="{{{ URL::route('admin') }}}">
-         {{{ Lang::get('admin/nav.admin') }}}
+    <a class="navbar-brand" href="{{{ route('admin') }}}">
+         ADMIN
     </a>
 
 
     <ul class="nav navbar-nav">
         @section('nav')
 
-        <li class="dropdown {{ ( Request::url() == URL::route('admin.users.index') ? 'active' : '' ) }}">
-            <a href="{{ URL::route('admin.users.index') }}" class="dropdown-toggle">
-                {{{ Lang::get('admin/nav.users') }}}
+        <li class="dropdown {{ ( Request::url() == route('admin.users.index') ? 'active' : '' ) }}">
+            <a href="{{ route('admin.users.index') }}" class="dropdown-toggle">
+              Users
                 <span class="caret"></span>
             </a>
 
@@ -20,15 +20,15 @@
                 </li>
             </ul>
         </li>
-        <li class="{{ ( Request::url() == URL::route('admin.log.index') ? 'active' : '' ) }}">
-            <a href="{{ URL::route('admin.log.index') }}">{{{ Lang::get('admin/nav.log') }}}</a>
+        <li class="{{ ( Request::url() == route('admin.log.index') ? 'active' : '' ) }}">
+            <a href="{{ route('admin.log.index') }}">Log</a>
         </li>
         @show
     </ul>
 
     <ul class="nav navbar-nav pull-right">
         <li>
-            <a href="{{ URL::route('auth.logout') }}"> {{{ Lang::get('user/user.logout') }}} </a>
+            <a href="{{ route('auth.logout') }}">Logout</a>
         </li>
     </ul>
 </div>

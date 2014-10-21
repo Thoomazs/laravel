@@ -1,70 +1,54 @@
-<div class="form-group @if ($errors->has('username')) has-error @endif">
 
-                {!! Form::label('username', Lang::get('user/user.username'), []) !!}
+     {{-- TODO: quick fix --}}
+        <?php $errors = Session::has('errors') ? Session::get('errors') : $errors; ?>
 
-                @if ($errors->has('username'))
-                <div class="form-error"> {{ $errors->first('username') }}</div>
-                @endif
+    <!-- Firstname Form Input -->
 
-                {!! Form::text('username', null, array('class' => 'form-control', 'autocomplete' => 'off' )) !!}
+    <div class="form-group {{ $errors->has('firstname') ? 'has-error' : '' }}">
+        {!! Form::label('firstname', 'Firstname:') !!}
 
-            </div>
+        {!! $errors->first('firstname', '<div class="form-error">:message</div>') !!}
 
-            <div class="form-group @if ($errors->has('firstname')) has-error @endif">
+        {!! Form::text('firstname', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
+    </div>
 
-                {!! Form::label('firstname', Lang::get('user/user.firstname'), array()) !!}
+    <!-- Lastname Form Input -->
 
-                @if ($errors->has('firstname'))
-                <div class="form-error"> {{ $errors->first('firstname') }}</div>
-                @endif
+    <div class="form-group {{ $errors->has('lastname') ? 'has-error' : '' }}">
+        {!! Form::label('lastname', 'Lastname:') !!}
 
-                {!! Form::text('firstname', null, array('class' => 'form-control', 'autocomplete' => 'off' )) !!}
+        {!! $errors->first('lastname', '<div class="form-error">:message</div>') !!}
 
-            </div>
-            <div class="form-group @if ($errors->has('lastname')) has-error @endif">
+        {!! Form::text('lastname', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
+    </div>
 
-                {!! Form::label('lastname', Lang::get('user/user.lastname'), array()) !!}
+    <!-- Email Form Input -->
 
-                @if ($errors->has('lastname'))
-                <div class="form-error"> {{ $errors->first('lastname') }}</div>
-                @endif
+    <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+        {!! Form::label('email', 'Email:') !!}
 
-                {!! Form::text('lastname', null, array('class' => 'form-control', 'autocomplete' => 'off' )) !!}
+        {!! $errors->first('email', '<div class="form-error">:message</div>') !!}
 
-            </div>
+        {!! Form::email('email', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
+    </div>
 
-            <div class="form-group @if ($errors->has('email')) has-error @endif">
+    <!-- Password Form Password Input -->
 
-                {!! Form::label('email', Lang::get('user/user.email'), array()) !!}
+    <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
+        {!! Form::label('password', 'Password:') !!}
 
-                @if ($errors->has('email'))
-                <div class="form-error"> {{ $errors->first('email') }}</div>
-                @endif
+        {!! $errors->first('password', '<div class="form-error">:message</div>') !!}
 
-                {!! Form::text('email', null, array('class' => 'form-control', 'required')) !!}
+        {!! Form::password('password', ['class' => 'form-control', 'autocomplete' => 'off']) !!}
+    </div>
 
-            </div>
+    <!-- Password_confirmation Form Password Input -->
 
-            <div class="form-group @if ($errors->has('password')) has-error @endif">
+    <div class="form-group {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
+        {!! Form::label('password_confirmation', 'Password_confirmation:') !!}
 
-                {!! Form::label('password', Lang::get('user/user.password'), array()) !!}
+        {!! $errors->first('password_confirmation', '<div class="form-error">:message</div>') !!}
 
-                @if ($errors->has('password'))
-                <div class="form-error"> {{ $errors->first('password') }}</div>
-                @endif
+        {!! Form::password('password_confirmation', ['class' => 'form-control', 'autocomplete' => 'off']) !!}
+    </div>
 
-                {!! Form::password('password', array('class' => 'form-control', 'autocomplete' => 'off')) !!}
-
-            </div>
-
-            <div class="form-group @if ($errors->has('confirm_password')) has-error @endif">
-
-                {!! Form::label('confirm_password', Lang::get('user/user.confirm_password'), array()) !!}
-
-                @if ($errors->has('confirm_password'))
-                <div class="form-error"> {{ $errors->first('confirm_password') }}</div>
-                @endif
-
-                {!! Form::password('confirm_password', array('class' => 'form-control', 'autocomplete' => 'off' )) !!}
-
-            </div>

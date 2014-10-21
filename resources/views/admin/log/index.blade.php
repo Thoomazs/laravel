@@ -1,35 +1,34 @@
-@extends('admin.layouts.default')
+@extends('admin.layouts.master')
 
 @section('title')
-User index | @parent
+Log index | @parent
 @stop
 
 
 @section('content')
 
 
-<div id="main-column">
+<div class="controls">
+            <div class="row">
+                <div class="col-sm-4">
+                    {!! Form::open(['method' => 'GET']) !!}
+                    <div class="input-group">
+                        {!! Form::text('s', Input::get('s'), [ 'class' => 'form-control', 'autofocus' => 'true' ] ) !!}
 
-    <div class="controls">
-        <div class="row">
-            <div class="col-sm-8">
-                {{ Form::open(array('method' => 'GET')) }}
-                <div class="input-group">
-                    {{ Form::text('s', Input::get('s'), array('class' => 'form-control', 'autofocus' => 'true', 'placeholder' => Lang::get('form.placeholder.search') )) }}
-
-                    <span class="input-group-btn">
-                        {{ Form::submit(Lang::get('form.button.search'), array('class' => 'btn btn-success pull-right')) }}
-                    </span>
+                        <span class="input-group-btn">
+                            {!! Form::submit('Search', [ 'class' => 'btn btn-success pull-right' ]) !!}
+                        </span>
+                    </div>
+                    {!! Form::close() !!}
                 </div>
-                {{ Form::close() }}
-            </div>
-            <div class="col-sm-4 hidden-xs">
-                <div class="pull-right">
-                    {{ $logs->appends(array('s' => Input::get('s')))->links()->with(array("type" => "small")) }}
+
+                <div class="col-sm-4 hidden-xs">
+                        <a href="{{ route('admin.users.create') }}" class="create btn btn-success">
+                            <i class="fa fa-plus"></i>
+                        </a>
                 </div>
             </div>
         </div>
-    </div>
 
 
     <div class="table-responsive">
@@ -38,11 +37,11 @@ User index | @parent
             <thead>
             <tr>
                 <th class="id"><i class="fa fa-dot-circle-o"></i></th>
-                <th class="id">{{ Lang::get('general.id') }}</th>
-                <th>{{ Lang::get('general.date') }}</th>
-                <th> {{{ Lang::get('user/user.name') }}} </th>
-                <th>{{ Lang::get('general.message') }}</th>
-                <th>{{ Lang::get('general.ip') }}</th>
+                <th class="id">ID</th>
+                <th>Date</th>
+                <th>User</th>
+                <th>Message</th>
+                <th>IP</th>
             </tr>
             </thead>
             <tbody>
@@ -51,7 +50,7 @@ User index | @parent
             @foreach($logs as $log)
             <tr data-log="true" class="{{ $log->class }}">
                 <td class="id text-center">
-                    {{ $log->icon }}
+                    <i class="fa {{ $log->icon }}"></i>
                 </td>
                 <td class="id">
                     {{ $log->id }}
@@ -81,7 +80,7 @@ User index | @parent
             @else
             <tr>
                 <td colspan="99" class="end">
-                    {{{ Lang::get('messages.no_found') }}}
+                    No records were found
                 </td>
             </tr>
             @endif
@@ -93,13 +92,10 @@ User index | @parent
     @if( count( $logs) > 0)
     <div class="controls overflow-hidden">
         <div class="pull-right">
-            {{ $logs->appends(array('s' => Input::get('s')))->links()->with(array("type" => "normal")) }}
+{{--            {{ $logs->appends(array('s' => Input::get('s')))->links()->with(array("type" => "normal")) }}--}}
         </div>
     </div>
     @endif
-
-
-</div>
 
 @stop
 

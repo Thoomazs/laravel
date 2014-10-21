@@ -5,7 +5,10 @@ use Illuminate\Contracts\Logging\Log;
 use Illuminate\Support\Facades\Event;
 
 /**
+ * @Middleware("csrf")
  * @Middleware("admin")
+ * @Controller(prefix="admin")
+ *
  */
 class AdminController extends BaseController
 {
@@ -23,8 +26,11 @@ class AdminController extends BaseController
      *
      * @return Container
      */
-    public function getWelcome()
+    public function getWelcome(Log $log)
     {
+
+        $log->info(date(strtotime("now")));
+
         return view( "admin.welcome" );
     }
 

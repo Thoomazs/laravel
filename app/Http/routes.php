@@ -18,12 +18,23 @@
     |
     */
 
+    Log::listen( function ( $level, $message, $context )
+    {
+        $log = new \App\Log();
+
+        if(Auth::check()) $user = Auth::user()->id;
+        else $user = null;
+
+//        dd((int)$user);
+        $log->create( [ "level" => $level, "user_id" => 1, "message" => $message, "ip" => Request::getClientIp() ] );
+    } );
+
     Route::group( [ 'prefix' => 'admin' ], function ()
     {
 
         Route::bind( "users", function ( $id )
         {
-            return App\User::find($id);
+            return App\User::find( $id );
         } );
 
         Route::resource( 'users', 'Admin\UsersController' );

@@ -23,6 +23,6 @@ class Log extends Model
 
     public function user()
     {
-        return $this->hasOne('users');
+        return $this->hasOne('App\User', "id", "user_id");
     }
 }

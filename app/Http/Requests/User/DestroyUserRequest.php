@@ -1,8 +1,10 @@
 <?php namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use App\User;
 
-class DeleteUserRequest extends FormRequest {
+class DestroyUserRequest extends FormRequest {
 
 	/**
 	 * Get the validation rules that apply to the request.
@@ -21,7 +23,7 @@ class DeleteUserRequest extends FormRequest {
 	 */
 	public function authorize()
 	{
-		return $this->route->parameter("id") !== Auth::id();
+		return $this->route->parameter("users")->id !== Auth::id();
 	}
 
 }

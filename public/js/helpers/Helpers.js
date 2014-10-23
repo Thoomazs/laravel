@@ -1,7 +1,7 @@
 function Helpers() {
 
     this.init = function() {
-        var $this = this;
+        var _this = this;
 
         // tooltip
         if ( $.fn.tooltip )
@@ -64,7 +64,7 @@ function Helpers() {
             var $this = $( this );
             var href = $this.attr( "href" );
 
-            Ext.modal( {
+            _this.modal( {
                 title   : "Jste si jistý?",
                 body    : '<div class="alert alert-danger text-center" style="margin: -16px -15px;border-radius: 0;padding: 20px 15px;"><strong>Opravdu</strong> chcete tuto akci provést?</div>',
                 buttons : [

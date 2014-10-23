@@ -36,11 +36,12 @@ class Kernel extends HttpKernel
         } catch ( Exception $e )
         {
 
+
             if ( !Config::get( 'app.debug' ) )
             {
-                $code = $e->getStatusCode();
-
                 Log::error( $e );
+
+                $code = $e->getStatusCode();
 
                 switch ( $code )
                 {

@@ -26,6 +26,11 @@
                             <i class="fa fa-plus"></i>
                         </a>
                 </div>
+                <div class="col-sm-4">
+                    <div class="pull-right">
+                        @include("templates.pagination", ["paginator" => $users, "type" => "simple"])
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -91,8 +96,7 @@
             @if( count( $users) > 0)
             <div class="controls overflow-hidden">
                 <div class="pull-right">
-                {!! $users->render() !!}
-{{--                    {{ $users->appends(array('s' => Input::get('s')))->links()->with(array("type" => "normal")) }}--}}
+                       @include("templates.pagination", ["paginator" => $users])
                 </div>
             </div>
             @endif

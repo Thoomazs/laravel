@@ -21,11 +21,10 @@ Log index | @parent
                     </div>
                     {!! Form::close() !!}
                 </div>
-
-                <div class="col-sm-4 hidden-xs">
-                        <a href="{{ route('admin.users.create') }}" class="create btn btn-success">
-                            <i class="fa fa-plus"></i>
-                        </a>
+                <div class="col-sm-8">
+                    <div class="pull-right">
+                        @include("templates.pagination", ["paginator" => $logs, "type" => "simple"])
+                    </div>
                 </div>
             </div>
         </div>
@@ -38,6 +37,7 @@ Log index | @parent
             <tr>
                 <th class="id"><i class="fa fa-dot-circle-o"></i></th>
                 <th class="id">ID</th>
+                <th>Level</th>
                 <th>Date</th>
                 <th>User</th>
                 <th>Message</th>
@@ -47,42 +47,44 @@ Log index | @parent
             <tbody>
 
             @if( count( $logs) > 0)
-            @foreach($logs as $log)
-            <tr data-log="true" class="{{ $log->class }}">
-                <td class="id text-center">
-                    <i class="fa {{ $log->icon }}"></i>
-                </td>
-                <td class="id">
-                    {{ $log->id }}
-                </td>
-                <td>
-                    {{ $log->created_at }}
-                </td>
-                <td>
-                    @if( $log->user )
-                    <a href="{{ URL::route('admin.users.edit', $log->user->id) }}">
-                        {{ $log->user->name }}
-                    </a>
-                    @else
-                    <span class="muted">–</span>
-                    @endif
-                </td>
-                <td class="message">
-                    <small>{{{ $log->message }}}</small>
-                </td>
-                <td>
-                    {{ $log->ip_address }}
-                </td>
+                @foreach($logs as $log)
+                <tr data-log="true" class="{{ $log->class }}">
+                    <td class="id text-center">
+                        <i class="fa {{ $log->icon }}"></i>
+                    </td>
+                    <td class="id">
+                        {{ $log->id }}
+                    </td>
+                     <td>
+                        {{ $log->level }}
+                    </td>
+                    <td>
+                        {{ $log->created_at }}
+                    </td>
+                    <td>
+                        @if( $log->user )
+                        <a href="{{ URL::route('admin.users.edit', $log->user->id) }}">
+                            {{ $log->user->name }}
+                        </a>
+                        @else
+                        <span class="muted">–</span>
+                        @endif
+                    </td>
+                    <td class="message">
+                        <small>{{{ $log->message }}}</small>
+                    </td>
+                    <td>
+                        {{ $log->ip }}
+                    </td>
 
-            </tr>
-            @endforeach
-
+                </tr>
+                @endforeach
             @else
-            <tr>
-                <td colspan="99" class="end">
-                    No records were found
-                </td>
-            </tr>
+                <tr>
+                    <td colspan="99" class="end">
+                        No records were found
+                    </td>
+                </tr>
             @endif
             </tbody>
         </table>
@@ -92,7 +94,7 @@ Log index | @parent
     @if( count( $logs) > 0)
     <div class="controls overflow-hidden">
         <div class="pull-right">
-{{--            {{ $logs->appends(array('s' => Input::get('s')))->links()->with(array("type" => "normal")) }}--}}
+            @include("templates.pagination", ["paginator" => $logs])
         </div>
     </div>
     @endif

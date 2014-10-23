@@ -5,7 +5,7 @@
 <div class="row margin-top">
     <div class="col-sm-6 col-sm-offset-3">
 
-        {!! Form::model($user,['route' => ['admin.users.update',$user->id], 'method' => 'PATCH']) !!}
+        {!! Form::model($user, ['route' => ['admin.users.update',$user->id], 'method' => 'PATCH']) !!}
 
         <fieldset>
 

@@ -1,8 +1,8 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseController;
-use Illuminate\Contracts\Logging\Log;
-use Illuminate\Support\Facades\Event;
+
+use Illuminate\Session\Store as Session;
 
 /**
  * @Middleware("csrf")
@@ -13,11 +13,9 @@ use Illuminate\Support\Facades\Event;
 class AdminController extends BaseController
 {
 
-    protected $_perPage;
-
-    function  __construct()
+    function  __construct( Session $session )
     {
-        $this->_perPage = 20;
+        parent::__construct( $session );
     }
 
     /**
@@ -26,10 +24,8 @@ class AdminController extends BaseController
      *
      * @return Container
      */
-    public function getWelcome(Log $log)
+    public function getWelcome()
     {
-
-        $log->info(date(strtotime("now")));
 
         return view( "admin.welcome" );
     }

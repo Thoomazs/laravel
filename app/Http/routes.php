@@ -11,6 +11,15 @@
     |
     */
 
+    Log::listen( function ( $level, $message, $context )
+    {
+        $log = new \App\Log();
+
+        if( Auth::check() ) $user = Auth::user()->id;
+        else $user = null;
+
+                $log->create( [ "level" => $level, "user_id" => $user, "message" => $message, "ip" => Request::ip() ] );
+    } );
     /*
     |--------------------------------------------------------------------------
     | Admin Routes
@@ -18,16 +27,6 @@
     |
     */
 
-    Log::listen( function ( $level, $message, $context )
-    {
-        $log = new \App\Log();
-
-        if(Auth::check()) $user = Auth::user()->id;
-        else $user = null;
-
-//        dd((int)$user);
-        $log->create( [ "level" => $level, "user_id" => 1, "message" => $message, "ip" => Request::ip() ] );
-    } );
 
     Route::group( [ 'prefix' => 'admin' ], function ()
     {
@@ -37,13 +36,13 @@
             return App\User::find( $id );
         } );
 
-        Route::resource( 'users', 'Admin\UsersController' );
+        Route::resource( 'users', 'App\Http\Controllers\Admin\UsersController' );
 
         //        Route::resource( 'product', 'Admin\ProductsController' );
 
-        Route::resource( 'log', 'Admin\LogController', [ 'only' => 'index' ] );
+        Route::resource( 'log', 'App\Http\Controllers\Admin\LogController', [ 'only' => 'index' ] );
 
-        Route::get( '/', [ 'as' => 'admin', 'uses' => 'Admin\AdminController@getWelcome' ] );
+        Route::get( '/', [ 'as' => 'admin', 'uses' => 'App\Http\Controllers\Admin\AdminController@getWelcome' ] );
     } );
 
 

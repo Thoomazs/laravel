@@ -1,4 +1,4 @@
-@extends('site.layouts.master')
+@extends('......layouts.master')
 
 @section('content')
 
@@ -36,19 +36,29 @@
 
 
 
-                  <!-- Remember Form Checkbox Input -->
+                    <!-- Remember Form Checkbox Input -->
 
-                  <div class="form-group {{ $errors->has('remember') ? 'has-error' : '' }}">
-                      {!! Form::label('remember', 'Remember:') !!}
+                    <div class="row margin-bottom">
+                        <div class="col-sm-6">
 
-                      <div class="checkbox">
-                          {!! Form::checkbox( 'remember', true, false, ['id' => 'remember']) !!}
+                            <div class="form-group {{ $errors->has('remember') ? 'has-error' : '' }}">
+                                  {!! Form::label('remember', 'Remember:') !!}
 
-                          {!! $errors->first('remember', '<div class="form-error">:message</div>') !!}
+                                  <div class="checkbox">
+                                      {!! Form::checkbox( 'remember', true, false, ['id' => 'remember']) !!}
 
-                          {!! Form::label('remember', 'Remember') !!}
-                      </div>
-                  </div>
+                                      {!! $errors->first('remember', '<div class="form-error">:message</div>') !!}
+
+                                      {!! Form::label('remember', 'Remember') !!}
+                                  </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="{{ route("auth.forget-password") }}" class="pull-right btn btn-default btn-sm" style="margin-top: 27px;"> {{ trans("Forget password") }}</a>
+                        </div>
+                    </div>
+
 
                   <!-- Login Form Submit -->
 

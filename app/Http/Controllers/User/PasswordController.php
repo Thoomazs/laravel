@@ -31,19 +31,19 @@ class PasswordController extends BaseController {
 	/**
 	 * Display the form to request a password reset link.
 	 *
-	 * @Get("password/email")
+	 * @Get("forget-password", as="password.reset-request")
 	 *
 	 * @return Response
 	 */
 	public function showResetRequestForm()
 	{
-		return view('password.email');
+		return view('site.user.password.reset-request');
 	}
 
 	/**
 	 * Send a reset link to the given user.
 	 *
-	 * @Post("password/email")
+	 * @Post("forget-password")
 	 *
 	 * @param  Request  $request
 	 * @return Response
@@ -63,7 +63,7 @@ class PasswordController extends BaseController {
 	/**
 	 * Display the password reset view for the given token.
 	 *
-	 * @Get("password/reset")
+	 * @Get("reset-password/{token}", as="password.reset.token")
 	 *
 	 * @param  string  $token
 	 * @return Response
@@ -75,13 +75,13 @@ class PasswordController extends BaseController {
 			throw new NotFoundHttpException;
 		}
 
-		return view('password.reset')->with('token', $token);
+		return view('site.user.password.reset')->with('token', $token);
 	}
 
 	/**
 	 * Reset the given user's password.
 	 *
-	 * @Post("password/reset")
+	 * @Post("reset-password", as="password.reset")
 	 *
 	 * @param  Request  $request
 	 * @return Response

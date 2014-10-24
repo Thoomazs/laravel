@@ -1,4 +1,4 @@
-@extends('......layouts.master')
+@extends('site.layouts.master')
 
 @section('content')
 
@@ -17,14 +17,14 @@
 
             <div class="well">
 
-                {!! Form::open(['route' => 'auth.forget-password', 'method' => 'POST', 'autocomplete' => 'off', 'novalidate', 'class' => 'form-basic']) !!}
+                {!! Form::open(['route' => 'password.reset-request', 'method' => 'POST', 'autocomplete' => 'off', 'novalidate', 'class' => 'form-basic']) !!}
                     <fieldset>
-                        <legend>Reset Password</legend>
+                        <legend>{{ trans('Reset Password') }}</legend>
 
                         <!-- Email Form Input -->
 
                         <div class="form-group {{ $errors->has('email') ? 'has-error': '' }}">
-                            {!! Form::label('email', 'Email:') !!}
+                            {!! Form::label('email', trans('Email') . ':') !!}
 
                             {!! $errors->first('email', '<div class="form-error">:message</div>') !!}
 
@@ -34,7 +34,7 @@
                       <!-- Login Form Submit -->
 
                       <div class="form-group">
-                            {!! Form::button( trans('Generate new password'), ['type' => 'submit', 'class' => 'btn btn-primary form-control']) !!}
+                            {!! Form::button( trans('Request new password'), ['type' => 'submit', 'class' => 'btn btn-primary form-control']) !!}
                       </div>
 
                     </fieldset>

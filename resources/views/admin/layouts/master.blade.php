@@ -10,9 +10,8 @@
     @include('admin.layouts.partials.header')
 </header>
 
-<div id="flash-messages">
-    @include('admin.layouts.partials.messages')
-</div>
+
+@include('admin.layouts.partials.messages')
 
 <div id="main">
     <div class="container">

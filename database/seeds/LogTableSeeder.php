@@ -1,7 +1,7 @@
 <?php
 
     use Illuminate\Database\Seeder;
-    use Illuminate\Support\Facades\Hash;
+    use Illuminate\Support\Facades\Request;
 
     class LogTableSeeder extends Seeder
     {
@@ -14,7 +14,7 @@
             $logs = [ 'level'      => 'info',
                       'user_id'       => 1,
                       'message'    => 'DB SEED',
-                      'ip'         => Request::getClientIp(),
+                      'ip'         => Request::ip(),
                       'created_at' => new DateTime,
                       'updated_at' => new DateTime, ];
 

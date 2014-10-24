@@ -42,7 +42,7 @@
          *
          * @return \Illuminate\Pagination\LengthAwarePaginator
          */
-        public function paginate( $perPage = 10 )
+        public function paginate( $perPage = 100 )
         {
             $all = $this->log->with( "user" )->orderBy( "id", "DESC" )->paginate( $perPage );
 

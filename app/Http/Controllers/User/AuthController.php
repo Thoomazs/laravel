@@ -1,109 +1,99 @@
-<?php namespace App\Http\Controllers\Auth;
+<?php namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\BaseController;
-use Illuminate\Contracts\Auth\Guard;
-
+use App\Http\Repositories\UserRepository;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 
-use App\User;
 /**
  * @Middleware("guest", except={"logout"})
  */
-class AuthController extends BaseController {
+class AuthController extends BaseController
+{
 
-	/**
-	 * The Guard implementation.
-	 *
-	 * @var Guard
-	 */
-	protected $auth;
+    /**
+     * @var UserRepository
+     */
+    protected $repository;
 
-	/**
-	 * Create a new authentication controller instance.
-	 *
-	 * @param  Guard  $auth
-	 * @return void
-	 */
-	public function __construct(Guard $auth)
-	{
-		$this->auth = $auth;
-	}
+    /**
+     * @param UserRepository $repository
+     */
+    public function __construct( UserRepository $repository )
+    {
+        $this->repository = $repository;
+    }
 
-	/**
-	 * Show the application registration form.
-	 *
-	 * @Get("register", as="auth.register")
-	 *
-	 * @return Response
-	 */
-	public function showRegistrationForm()
-	{
-		return view('site.user.auth.register');
-	}
+    /**
+     * Show the application registration form.
+     * @Get("register", as="auth.register")
+     *
+     * @return Response
+     */
+    public function showRegistrationForm()
+    {
+        return view( 'site.user.auth.register' );
+    }
 
-	/**
-	 * Handle a registration request for the application.
-	 *
-	 * @Post("register")
-	 *
-	 * @param  RegisterRequest  $request
-	 * @return Response
-	 */
-	public function register(RegisterRequest $request, User $user)
-	{
-		// Registration form is valid, create user...
-        $new_user = $user->create($request->all());
+    /**
+     * Handle a registration request for the application.
+     * @Post("register")
+     *
+     * @param  RegisterRequest $request
+     *
+     * @return Response
+     */
+    public function register( RegisterRequest $request )
+    {
+        $this->repository->login( $this->repository->create( $request->all() ) );
 
-        $this->auth->login($new_user);
+        return redirect()->route( "home" );
+    }
 
-		return redirect('/');
-	}
+    /**
+     * Show the application login form.
+     * @Get("login", as="auth.login")
+     *
+     * @return Response
+     */
+    public function showLoginForm()
+    {
+        return view( 'site.user.auth.login' );
+    }
 
-	/**
-	 * Show the application login form.
-	 *
-	 * @Get("login", as="auth.login")
-	 *
-	 * @return Response
-	 */
-	public function showLoginForm()
-	{
-		return view('site.user.auth.login');
-	}
+    /**
+     * Handle a login request to the application.
+     * @Post("login")
+     *
+     * @param  LoginRequest $request
+     *
+     * @return Response
+     */
+    public function login( LoginRequest $request )
+    {
+        $response = $this->repository->login( $request->only( 'email', 'password' ), $request->get( "remember" ) );
 
-	/**
-	 * Handle a login request to the application.
-	 *
-	 * @Post("login")
-	 *
-	 * @param  LoginRequest  $request
-	 * @return Response
-	 */
-	public function login(LoginRequest $request)
-	{
-		if ($this->auth->attempt($request->only('email', 'password'), $request->get("remember")))
-		{
-			return redirect()->route('home');
-		}
+        if ( $response === true )
+        {
+            return redirect()->intended( route( 'home' ) );
+        }
+        else
+        {
+            return redirect()->route( 'auth.login' )->withErrors( $response );
+        }
+    }
 
-		return redirect()->route('auth.login')->withErrors([
-			'email' => 'These credentials do not match our records.',
-		]);
-	}
+    /**
+     * Log the user out of the application.
+     * @Get("logout", as="auth.logout")
+     *
+     * @return Response
+     */
+    public function logout()
+    {
+        $this->repository->logout();
 
-	/**
-	 * Log the user out of the application.
-	 *
-	 * @Get("logout", as="auth.logout")
-	 *
-	 * @return Response
-	 */
-	public function logout()
-	{
-		$this->auth->logout();
-
-		return redirect('/');
-	}
+        return redirect( '/' );
+    }
 
 }

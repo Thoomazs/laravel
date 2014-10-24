@@ -1,11 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Admin\AdminController;
 use App\Http\Repositories\LogRepository;
-use App\Log;
 use Illuminate\Http\Request;
-
-use Illuminate\Session\Store as Session;
 
 /**
  * Class LogController
@@ -13,13 +9,13 @@ use Illuminate\Session\Store as Session;
  */
 class LogController extends AdminController
 {
-    protected $log;
+    protected $repository;
 
-    function __construct( LogRepository $log, Session $session )
+    function __construct( LogRepository $log )
     {
-        parent::__construct($session);
+        parent::__construct();
 
-        $this->log = $log;
+        $this->repository = $log;
     }
 
     /**
@@ -31,10 +27,10 @@ class LogController extends AdminController
     {
         if ( ( $s = $request->get( 's' ) ) )
         {
-            $this->log = $this->log->search( $s );
+            $this->repository = $this->repository->search( $s );
         }
 
-        $logs = $this->log->paginate();
+        $logs = $this->repository->paginate();
 
         return view( "admin.log.index", compact( 'logs' ) );
     }

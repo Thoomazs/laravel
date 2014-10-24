@@ -4,11 +4,10 @@
          ADMIN
     </a>
 
-
     <ul class="nav navbar-nav">
         @section('nav')
 
-        <li class="dropdown {{ ( Request::url() == route('admin.users.index') ? 'active' : '' ) }}">
+        <li class="dropdown {{ ( controller() == 'Users' ? 'active' : '' ) }}">
             <a href="{{ route('admin.users.index') }}" class="dropdown-toggle">
               Users
                 <span class="caret"></span>
@@ -20,7 +19,7 @@
                 </li>
             </ul>
         </li>
-        <li class="{{ ( Request::url() == route('admin.log.index') ? 'active' : '' ) }}">
+        <li class="{{ (  controller() == 'Log' ? 'active' : '' ) }}">
             <a href="{{ route('admin.log.index') }}">Log</a>
         </li>
         @show

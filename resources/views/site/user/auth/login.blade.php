@@ -1,9 +1,6 @@
-@extends('......layouts.master')
+@extends('site.layouts.master')
 
 @section('content')
-
-    {{-- TODO: quick fix --}}
-    <?php $errors = Session::has('errors') ? Session::get('errors') : $errors; ?>
 
     <div class="col-sm-6 col-sm-offset-3">
 
@@ -11,23 +8,22 @@
 
             {!! Form::open(['route' => 'auth.login', 'method' => 'POST', 'autocomplete' => 'off', 'novalidate', 'class' => 'form-basic']) !!}
                 <fieldset>
-                    <legend>Login</legend>
+                    <legend>{{ trans('Login') }}</legend>
 
                     <!-- Email Form Input -->
 
-                    <div class="form-group {{ $errors->has('email') ? 'has-error': '' }}">
-                        {!! Form::label('email', 'Email:') !!}
+                    <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+                        {!! Form::label('email', trans('Email') . ':') !!}
 
                         {!! $errors->first('email', '<div class="form-error">:message</div>') !!}
 
                         {!! Form::email('email', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
                     </div>
 
-
                     <!-- Password Form Password Input -->
 
                     <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
-                        {!! Form::label('password', 'Password:') !!}
+                        {!! Form::label('password', trans('Password') . ':') !!}
 
                         {!! $errors->first('password', '<div class="form-error">:message</div>') !!}
 
@@ -35,27 +31,31 @@
                     </div>
 
 
-
-                    <!-- Remember Form Checkbox Input -->
-
                     <div class="row margin-bottom">
                         <div class="col-sm-6">
 
+                            <!-- Remember Form Checkbox Input -->
+
                             <div class="form-group {{ $errors->has('remember') ? 'has-error' : '' }}">
-                                  {!! Form::label('remember', 'Remember:') !!}
+                                {!! Form::label('remember', trans('Remember') . ':') !!}
 
-                                  <div class="checkbox">
-                                      {!! Form::checkbox( 'remember', true, false, ['id' => 'remember']) !!}
+                                <div class="checkbox">
+                                    {!! Form::checkbox( 'remember', true, false, ['id' => 'remember']) !!}
 
-                                      {!! $errors->first('remember', '<div class="form-error">:message</div>') !!}
+                                    {!! $errors->first('remember', '<div class="form-error">:message</div>') !!}
 
-                                      {!! Form::label('remember', 'Remember') !!}
-                                  </div>
+                                    {!! Form::label('remember', trans('Remember')) !!}
+                                </div>
                             </div>
+
 
                         </div>
                         <div class="col-sm-6">
-                            <a href="{{ route("auth.forget-password") }}" class="pull-right btn btn-default btn-sm" style="margin-top: 27px;"> {{ trans("Forget password") }}</a>
+
+                            <!-- Forget password -->
+
+                            <a href="{{ route("password.reset-request") }}" class="pull-right btn btn-default btn-sm" style="margin-top: 27px;"> {{ trans("Forget password") }}</a>
+
                         </div>
                     </div>
 
@@ -63,8 +63,9 @@
                   <!-- Login Form Submit -->
 
                   <div class="form-group">
-                        {!! Form::button('Login', ['type' => 'submit', 'class' => 'btn btn-primary form-control']) !!}
+                      {!! Form::button(trans('Login'), ['type' => 'submit', 'class' => 'btn btn-primary form-control']) !!}
                   </div>
+
 
                 </fieldset>
             {!! Form::close() !!}

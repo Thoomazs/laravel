@@ -35,7 +35,8 @@ class Kernel extends HttpKernel
         try
         {
             return parent::handle( $request );
-        } catch ( Exception $e )
+        }
+        catch ( Exception $e )
         {
 
 

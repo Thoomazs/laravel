@@ -1,20 +1,19 @@
 <?php namespace App\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Illuminate\Session\Store as Session;
+use Illuminate\Support\Facades\Session;
 
 class BaseController extends Controller
 {
 
-    protected $session;
-
-    function  __construct(Session $session)
+    function  __construct()
     {
-        $this->session = $session;
+
     }
 
 
-    protected function flash($msg, $class = 'msg-success') {
-        $this->session->flash( $class, $msg );
+    protected function flash($msg, $class = 'msg-success')
+    {
+        Session::flash( $class, $msg );
     }
 }

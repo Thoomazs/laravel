@@ -15,14 +15,14 @@
                          'lastname'   => 'Novotný',
                          'slug'       => 'tomas-novotny',
                          'email'      => 'novotny@cynet.cz',
-                         'password'   => Hash::make( 'heslo' ),
+                         'password'   => bcrypt( 'heslo' ),
                          'created_at' => new DateTime,
                          'updated_at' => new DateTime ],
                        [ 'firstname'  => '',
                          'lastname'   => '',
                          'slug'       => 'test',
                          'email'      => 'test@cynet.cz',
-                         'password'   => Hash::make( 'heslo' ),
+                         'password'   => bcrypt( 'heslo' ),
                          'created_at' => new DateTime,
                          'updated_at' => new DateTime ] ];
 

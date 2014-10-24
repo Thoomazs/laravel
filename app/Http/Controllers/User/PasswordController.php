@@ -1,114 +1,111 @@
-<?php namespace App\Http\Controllers\Auth;
+<?php namespace App\Http\Controllers\User;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
-use Illuminate\Contracts\Auth\PasswordBroker;
+use App\Http\Repositories\UserRepository;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @Middleware("guest")
  */
-class PasswordController extends BaseController {
+class PasswordController extends BaseController
+{
 
-	/**
-	 * The password broker implementation.
-	 *
-	 * @var PasswordBroker
-	 */
-	protected $passwords;
+    /**
+     * @var UserRepository
+     */
+    protected $repository;
 
-	/**
-	 * Create a new password controller instance.
-	 *
-	 * @param  PasswordBroker  $passwords
-	 * @return void
-	 */
-	public function __construct(PasswordBroker $passwords)
-	{
-		$this->passwords = $passwords;
-	}
+    /**
+     * Create a new password controller instance.
+     *
+     * @param  PasswordBroker $passwords
+     *
+     * @return void
+     */
+    public function __construct( UserRepository $repository )
+    {
+        parent::__construct();
 
-	/**
-	 * Display the form to request a password reset link.
-	 *
-	 * @Get("forget-password", as="password.reset-request")
-	 *
-	 * @return Response
-	 */
-	public function showResetRequestForm()
-	{
-		return view('site.user.password.reset-request');
-	}
+        $this->repository = $repository;
+    }
 
-	/**
-	 * Send a reset link to the given user.
-	 *
-	 * @Post("forget-password")
-	 *
-	 * @param  Request  $request
-	 * @return Response
-	 */
-	public function sendResetLink(Request $request)
-	{
-		switch ($response = $this->passwords->sendResetLink($request->only('email')))
-		{
-			case PasswordBroker::INVALID_USER:
-				return redirect()->back()->with('error', trans($response));
+    /**
+     * Display the form to request a password reset link.
+     * @Get("forget-password", as="password.reset-request")
+     *
+     * @return Response
+     */
+    public function showResetRequestForm()
+    {
+        return view( 'site.user.password.reset-request' );
+    }
 
-			case PasswordBroker::RESET_LINK_SENT:
-				return redirect()->back()->with('status', trans($response));
-		}
-	}
+    /**
+     * Send a reset link to the given user.
+     * @Post("forget-password")
+     *
+     * @param  Request $request
+     *
+     * @return Response
+     */
+    public function sendResetLink( Request $request )
+    {
+        $response = $this->repository->resetLink( $request->only( 'email' ) );
 
-	/**
-	 * Display the password reset view for the given token.
-	 *
-	 * @Get("reset-password/{token}", as="password.reset.token")
-	 *
-	 * @param  string  $token
-	 * @return Response
-	 */
-	public function showResetForm($token = null)
-	{
-		if (is_null($token))
-		{
-			throw new NotFoundHttpException;
-		}
+        if ( $response === true )
+        {
+            $this->flash( trans( 'passwords.sent' ) );
 
-		return view('site.user.password.reset')->with('token', $token);
-	}
+            return redirect()->route( "home" );
+        }
+        else
+        {
+            return redirect()->back()->withInput()->withErrors( $response );
+        }
+    }
 
-	/**
-	 * Reset the given user's password.
-	 *
-	 * @Post("reset-password", as="password.reset")
-	 *
-	 * @param  Request  $request
-	 * @return Response
-	 */
-	public function resetPassword(Request $request)
-	{
-		$credentials = $request->only(
-			'email', 'password', 'password_confirmation', 'token'
-		);
+    /**
+     * Display the password reset view for the given token.
+     * @Get("reset-password/{token}", as="password.reset.token")
+     *
+     * @param  string $token
+     *
+     * @return Response
+     */
+    public function showResetForm( $token = null )
+    {
+        if ( is_null( $token ) )
+        {
+            throw new NotFoundHttpException;
+        }
 
-		$response = $this->passwords->reset($credentials, function($user, $password)
-		{
-			$user->password = bcrypt($password);
+        return view( 'site.user.password.reset' )->with( 'token', $token );
+    }
 
-			$user->save();
-		});
+    /**
+     * Reset the given user's password.
+     * @Post("reset-password", as="password.reset")
+     *
+     * @param  Request $request
+     *
+     * @return Response
+     */
+    public function resetPassword( Request $request )
+    {
 
-		switch ($response)
-		{
-			case PasswordBroker::INVALID_PASSWORD:
-			case PasswordBroker::INVALID_TOKEN:
-			case PasswordBroker::INVALID_USER:
-				return redirect()->back()->with('error', trans($response));
+        $response = $this->repository->reset( $request->only( 'email', 'password', 'password_confirmation', 'token' ) );
 
-			case PasswordBroker::PASSWORD_RESET:
-				return redirect()->to('/');
-		}
-	}
+        if ( $response === true )
+        {
+            $this->flash( trans( 'passwords.sent' ) );
+
+            return redirect()->route( "home" );
+        }
+        else
+        {
+            return redirect()->back()->withInput()->withErrors( $response );
+        }
+    }
 
 }

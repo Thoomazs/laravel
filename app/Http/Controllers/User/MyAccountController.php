@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\Auth;
+<?php namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\BaseController;
 
@@ -8,7 +8,7 @@ use App\Http\Controllers\BaseController;
 class MyAccountController extends BaseController {
 
     /**
-     * Show the application registration form.
+     * Show profile.
      *
      * @Get("profile", as="my-account.profile")
      *

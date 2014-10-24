@@ -5,6 +5,8 @@
         @include('site.layouts.partials.head')
     </head>
     <body>
+        @include('site.layouts.partials.messages')
+
         <header id="header">
             @include('site.layouts.partials.header')
         </header>

@@ -2,8 +2,6 @@
 
 use App\Http\Controllers\BaseController;
 
-use Illuminate\Session\Store as Session;
-
 /**
  * @Middleware("csrf")
  * @Middleware("admin")
@@ -13,9 +11,9 @@ use Illuminate\Session\Store as Session;
 class AdminController extends BaseController
 {
 
-    function  __construct( Session $session )
+    function  __construct( )
     {
-        parent::__construct( $session );
+        parent::__construct( );
     }
 
     /**

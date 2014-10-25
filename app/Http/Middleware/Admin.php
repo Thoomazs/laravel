@@ -4,8 +4,9 @@ use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Routing\Middleware;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Support\Facades\Session;
 
-class Authenticated implements Middleware
+class Admin implements Middleware
 {
 
     /**
@@ -56,6 +57,10 @@ class Authenticated implements Middleware
             {
                 return $this->response->redirectGuest( route('auth.login') );
             }
+        } else if ( !$this->auth->user()->hasRole('Admin') )
+        {
+            Session::flash('msg-danger', trans('You don\'t have permission.'));
+            return $this->response->redirectToRoute( 'home' );
         }
 
         return $next( $request );

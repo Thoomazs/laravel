@@ -14,14 +14,14 @@ class CreateLogTable extends Migration {
 	{
 		Schema::create('log', function(Blueprint $table)
 		{
-			$table->increments('id');
+			$table->increments('id')->unsigned();
 			$table->string('level',20);
             $table->integer('user_id')->unsigned()->nullable();
 			$table->binary('message');
 			$table->string('ip', 15);
 			$table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('set null');
         });
 	}
 
@@ -32,6 +32,10 @@ class CreateLogTable extends Migration {
 	 */
 	public function down()
 	{
+        Schema::table('log', function (Blueprint $table) {
+            $table->dropForeign('log_user_id_foreign');
+        });
+
 		Schema::drop('log');
 	}
 

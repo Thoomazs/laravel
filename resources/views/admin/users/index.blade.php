@@ -39,11 +39,12 @@
             <table class="table table-condensed table-bordered table-responsive table-striped table-hover no-margin-bottom">
                 <thead>
                     <tr>
-                        <th class="id">ID</th>
-                        <th>Email</th>
-                        <th>Name</th>
-                        <th>Slug</th>
-                        <th>Actions</th>
+                        <th class="id">{{ trans('ID') }}</th>
+                        <th>{{ trans('Email') }}</th>
+                        <th>{{ trans('Name') }}</th>
+                        <th>{{ trans('Role') }}</th>
+                        <th>{{ trans('Slug') }}</th>
+                        <th>{{ trans('Action') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,6 +61,11 @@
                             </td>
                             <td>
                                 {{ $user->name }}
+                            </td>
+                            <td>
+                                @foreach($user->roles as $role)
+                                    <a href="{{ route('admin.roles.edit', [$role->id] ) }}">{{ $role->name }}</a>
+                                @endforeach
                             </td>
                              <td>
                                 {{ $user->slug }}
@@ -85,7 +91,7 @@
                 @else
                 <tr>
                     <td colspan="99" class="end">
-                       No records were found
+                       {{ trans('No records were found') }}
                     </td>
                 </tr>
                 @endif

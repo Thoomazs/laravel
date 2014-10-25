@@ -1,17 +1,26 @@
 <?php namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\BaseController;
+
 use App\Http\Repositories\UserRepository;
+
+use Illuminate\Http\Request;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\DestroyUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
+
 use App\User;
-use Illuminate\Http\Request;
+
+
 
 /**
  * Class UsersController
-
+ *
+ * @Resource("admin/users")
+ * @Middleware("admin")
+ *
  */
-class UsersController extends AdminController
+class UsersController extends BaseController
 {
 
     /**

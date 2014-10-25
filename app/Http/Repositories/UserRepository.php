@@ -2,6 +2,7 @@
     namespace App\Http\Repositories;
 
     use App\User;
+    use App\Role;
     use Illuminate\Contracts\Auth\Guard as Auth;
     use Illuminate\Contracts\Auth\PasswordBroker as Password;
     use Illuminate\Log\Writer as Log;
@@ -47,11 +48,13 @@
          * @param Auth     $auth
          * @param Password $password
          */
-        function __construct( User $user, Log $log, Session $session, Auth $auth, Password $password )
+        function __construct( User $user, Role $role, Log $log, Session $session, Auth $auth, Password $password )
         {
             parent::__construct( $log, $session );
 
             $this->user = $user;
+
+            $this->role = $role;
 
             $this->auth = $auth;
 
@@ -78,7 +81,7 @@
         public function all()
         {
 
-            return $this->user->orderBy( "lastname", "ASC" )->orderBy( "firstname", "ASC" )->get();
+            return $this->user->with("roles")->orderBy( "lastname", "ASC" )->orderBy( "firstname", "ASC" )->get();
         }
 
         /**
@@ -88,11 +91,45 @@
          */
         public function paginate( $perPage = 10 )
         {
-            $all = $this->user->orderBy( "lastname", "ASC" )->orderBy( "firstname", "ASC" )->paginate( $perPage );
+            $all = $this->user->with( "roles" )->orderBy( "lastname", "ASC" )->orderBy( "firstname", "ASC" )->paginate( $perPage );
 
             //            $paginator = new Paginator( $all, $perPage, Paginator::resolveCurrentPage(), [ "path" => Paginator::resolveCurrentPath() ] );
 
             return $all;
+        }
+
+        public function roles()
+        {
+            $all = $this->role->get();
+
+            return $all;
+        }
+
+        public function createRole( $role_data )
+        {
+            if ( isset( $role_data["id"] ) )
+            {
+                return null;
+            }
+
+            $role = new Role;
+            $role->fill( $role_data );
+            $role->save();
+
+            $this->log->info( "Role created:\n\n ".var_export( $role->toArray(), true ) );
+
+            return $role;
+        }
+
+        public function updateRole( $role_data )
+        {
+            $role = Role::find( $role_data["id"] );
+            $role->fill( $role_data );
+            $role->save();
+
+            $this->log->info( "Role updated:\n\n ".var_export( $role->toArray(), true ) );
+
+            return $role;
         }
 
         /**

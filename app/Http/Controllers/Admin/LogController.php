@@ -1,13 +1,17 @@
 <?php namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\BaseController;
 use App\Http\Repositories\LogRepository;
 use Illuminate\Http\Request;
 
 /**
  * Class LogController
-
+ *
+ * @Resource("admin/log", only={"index"})
+ * @Middleware("admin")
+ *
  */
-class LogController extends AdminController
+class LogController extends BaseController
 {
     protected $repository;
 

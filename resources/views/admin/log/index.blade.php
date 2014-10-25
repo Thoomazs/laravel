@@ -36,12 +36,12 @@ Log index | @parent
             <thead>
             <tr>
                 <th class="id"><i class="fa fa-dot-circle-o"></i></th>
-                <th class="id">ID</th>
-                <th>Level</th>
-                <th>Date</th>
-                <th>User</th>
-                <th>Message</th>
-                <th>IP</th>
+                <th class="id">{{ trans('ID') }}</th>
+                <th>{{ trans('Level') }}</th>
+                <th>{{ trans('Date') }}</th>
+                <th>{{ trans('User') }}</th>
+                <th>{{ trans('Message') }}</th>
+                <th>{{ trans('IP') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -82,7 +82,7 @@ Log index | @parent
             @else
                 <tr>
                     <td colspan="99" class="end">
-                        No records were found
+                        {{ trans('No records were found') }}
                     </td>
                 </tr>
             @endif

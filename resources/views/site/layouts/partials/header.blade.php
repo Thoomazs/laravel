@@ -32,9 +32,11 @@
 
                 @if (Auth::check())
 
-                    <li>
-                        <a href="{{{ route('admin') }}}">Admin Panel</a>
-                    </li>
+                    @if( Auth::user()->hasRole('Admin') )
+                        <li>
+                            <a href="{{{ route('admin') }}}">Admin Panel</a>
+                        </li>
+                    @endif
 
                     <li class="{{ ( Request::url() == route('my-account.profile') ? ' active' : '') }}">
                         <a href="{{ route('my-account.profile') }}">{{{ Auth::user()->name }}}</a>

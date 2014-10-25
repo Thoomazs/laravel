@@ -15,7 +15,7 @@
 
             <ul class="dropdown-menu">
                 <li>
-                    <a href=""> ... </a>
+                    <a href="{{ route('admin.roles.index') }}"> Roles </a>
                 </li>
             </ul>
         </li>

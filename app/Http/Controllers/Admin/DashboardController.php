@@ -3,12 +3,11 @@
 use App\Http\Controllers\BaseController;
 
 /**
- * @Middleware("csrf")
+ * @Resource("admin", only={"index"}, names={"index": "admin"})
  * @Middleware("admin")
- * @Controller(prefix="admin")
  *
  */
-class AdminController extends BaseController
+class DashboardController extends BaseController
 {
 
     function  __construct( )
@@ -17,12 +16,9 @@ class AdminController extends BaseController
     }
 
     /**
-     *
-     * @Get("admin", as="admin")
-     *
-     * @return Container
+     * @return \Illuminate\View\View
      */
-    public function getWelcome()
+    public function index()
     {
 
         return view( "admin.welcome" );

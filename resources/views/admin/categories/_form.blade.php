@@ -49,7 +49,7 @@
         <div class="form-select">
             {!! $errors->first('products', '<div class="form-error">:message</div>') !!}
 
-            {!! Form::select(null, [0 => trans('Vyberte možnost.')] + $products, null, ['class'=>'form-control many-to-many','data-name' => 'products', 'autocomplete' => 'off']) !!}
+            {!! Form::select(null, [null => trans('Vyberte možnost.')] + $products, null, ['class'=>'form-control many-to-many','data-name' => 'products', 'autocomplete' => 'off']) !!}
         </div>
         </div>
     </div>

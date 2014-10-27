@@ -6,7 +6,7 @@
     <div class="col-sm-6 col-sm-offset-3">
 
         <div class="well">
-            {!! Form::open([ 'route' => 'admin.products.store', 'method' => 'POST', 'autocomplete' => 'off', 'novalidate', 'class' => 'form-basic' ]) !!}
+            {!! Form::open([ 'route' => 'admin.products.store', 'method' => 'POST', 'files' => true, 'autocomplete' => 'off', 'novalidate', 'class' => 'form-basic' ]) !!}
                 <fieldset>
                     <legend>{{ trans('New product') }}</legend>
 

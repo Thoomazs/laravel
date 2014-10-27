@@ -9,6 +9,21 @@
         {!! Form::text('name', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
     </div>
 
+    <!-- Image Form Input -->
+
+    <div class="form-group {{ $errors->has('image') ? 'has-error' : '' }}">
+        {!! Form::label('image', trans('Image') . ':') !!}
+
+        {!! $errors->first('image', '<div class="form-error">:message</div>') !!}
+
+        <div class="form-file">
+                <span class="text" data-title="{{ trans('vyberte soubor') }}">{{ trans('vyberte soubor') }}</span>
+                {!! Form::file('image', ['class' => 'form-control', 'autocomplete' => 'off']) !!}
+        </div>
+
+    </div>
+
+
     <!-- Desc Form Input -->
 
     <div class="form-group {{ $errors->has('desc') ? 'has-error' : '' }}">

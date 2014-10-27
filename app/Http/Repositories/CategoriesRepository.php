@@ -100,6 +100,10 @@
 
         protected function _createOrUpdate( Category $category, array $category_data )
         {
+            $category_data = $this->_addSlug($category_data);
+
+            if( $category_data["superior_id"] == 0) unset($category_data["superior_id"]);
+
             $category->fill( $category_data );
             $category->save();
 
@@ -164,5 +168,23 @@
             }
 
             return false;
+        }
+        
+        private function _addSlug( array $category )
+        {
+
+
+            $slug      = $this->_slugify($category[ "name" ]);
+            $test_slug = ( isset( $category[ "slug" ] ) && !empty( $category[ "slug" ] ) ) ? $category[ "slug" ] : $slug;
+
+            $i = 0;
+            while ( $this->category->whereSlug( $test_slug )->first() )
+            {
+                $test_slug = $slug."-".++$i;
+            }
+
+            $category[ "slug" ] = $test_slug;
+
+            return $category;
         }
     }

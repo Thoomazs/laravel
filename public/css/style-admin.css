@@ -277,6 +277,23 @@ hr.darker {
   line-height: 30px;
   vertical-align: middle;
 }
+form ._form-control {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+          transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
 form legend {
   border-bottom: 1px solid #cccccc;
 }
@@ -327,6 +344,8 @@ form .form-group .form-select select {
   height: 35px;
   -webkit-appearance: none;
   -moz-appearance: window;
+  outline: none;
+  cursor: pointer;
 }
 form .form-group .form-select::after {
   content: "\f107";
@@ -340,8 +359,58 @@ form .form-group .form-select::after {
   vertical-align: bottom;
   line-height: 15px;
 }
+form .form-group .form-select.active::after,
+form .form-group .form-select:hover::after {
+  color: #428bca;
+}
 form .form-group .form-select .form-error {
   bottom: -1px;
+  z-index: 1;
+}
+form .form-group .form-file {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+          transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+form .form-group .form-file::after {
+  content: '\f093';
+  font-family: FontAwesome;
+  position: absolute;
+  z-index: 0;
+  top: 10px;
+  right: 10px;
+  font-size: 16px;
+  outline: none;
+  color: #7e7e7e;
+  vertical-align: bottom;
+  line-height: 15px;
+}
+form .form-group .form-file.active::after,
+form .form-group .form-file:hover::after {
+  color: #428bca;
+}
+form .form-group .form-file input[type='file'] {
+  zoom: 1;
+  filter: alpha(opacity=0);
+  -webkit-opacity: 0;
+  -moz-opacity: 0;
+  opacity: 0;
+  cursor: pointer !important;
+  position: absolute;
+  top: 0;
+  left: 0;
   z-index: 1;
 }
 form .form-group .list-group {

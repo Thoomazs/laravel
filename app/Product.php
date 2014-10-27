@@ -18,7 +18,7 @@ class Product extends Model
      */
     protected $hidden = [ ];
 
-    protected $fillable = [ 'name', 'desc', 'price', 'stock' ];
+    protected $fillable = [ 'name', 'desc', 'price', 'stock', 'slug' ];
 
     public function categories()
     {

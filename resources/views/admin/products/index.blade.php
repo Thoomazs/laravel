@@ -41,6 +41,7 @@
                     <tr>
                         <th class="id">{{ trans('ID') }}</th>
                         <th>{{ trans('Name') }}</th>
+                        <th>{{ trans('Slug') }}</th>
                         <th>{{ trans('Stock') }}</th>
                         <th>{{ trans('Price') }}</th>
                         <th>{{ trans('Action') }}</th>
@@ -57,6 +58,9 @@
                             </td>
                             <td>
                                 {{ $product->name }}
+                            </td>
+                             <td>
+                                {{ $product->slug }}
                             </td>
                             <td>
                                 {{ $product->stock }} {{ trans('ks') }}

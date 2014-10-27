@@ -4,6 +4,7 @@
     use App\Product;
     use Illuminate\Log\Writer as Log;
     use Illuminate\Session\Store as Session;
+    use Illuminate\Filesystem\Filesystem;
 
     //use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 
@@ -31,11 +32,13 @@
          * @param Auth     $auth
          * @param Password $password
          */
-        function __construct( Product $product, Log $log, Session $session )
+        function __construct( Product $product, Log $log, Session $session, Filesystem $filesystem )
         {
             parent::__construct( $log, $session );
 
             $this->product = $product;
+
+            $this->filesystem = $filesystem;
         }
 
         /**
@@ -97,8 +100,18 @@
 
         protected function _createOrUpdate(Product $product, array $product_data)
         {
+
+            $product_data = $this->_addSlug($product_data);
+
             $product->fill( $product_data );
             $product->save();
+
+
+            if( $product_data["image"] ) {
+                $this->filesystem->makeDirectory( ($path = public_path() . '/uploads/products/' . $product["id"]), 0755, true);
+                $filename = str_random(12);
+                $product_data["image"]->move($path, $filename);
+            }
 
             $product_data[ 'categories' ] = (isset($product_data[ 'categories' ])) ? $product_data[ 'categories' ] : [];
             $product->categories()->sync( $product_data[ 'categories' ] );
@@ -161,5 +174,23 @@
             }
 
             return false;
+        }
+
+        private function _addSlug( array $product )
+        {
+
+
+            $slug      = $this->_slugify($product[ "name" ]);
+            $test_slug = ( isset( $product[ "slug" ] ) && !empty( $product[ "slug" ] ) ) ? $product[ "slug" ] : $slug;
+
+            $i = 0;
+            while ( $this->product->whereSlug( $test_slug )->first() )
+            {
+                $test_slug = $slug."-".++$i;
+            }
+
+            $product[ "slug" ] = $test_slug;
+
+            return $product;
         }
     }

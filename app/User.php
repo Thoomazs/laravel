@@ -28,7 +28,8 @@ class User extends Model implements UserContract, CanResetPasswordContract
     protected $fillable = [ 'firstname',
                             'lastname',
                             'email',
-                            'password' ];
+                            'password',
+                            'slug' ];
 
     public function getNameAttribute()
     {
@@ -37,13 +38,15 @@ class User extends Model implements UserContract, CanResetPasswordContract
 
     public function roles()
     {
-        return $this->belongsToMany( 'App\Role', "assigned_roles",  "user_id", "role_id" );
+        return $this->belongsToMany( 'App\Role', "assigned_roles", "user_id", "role_id" );
     }
 
-    public function hasRole($name)
+    public function hasRole( $name )
     {
-        foreach ($this->roles as $role) {
-            if ($role->name == $name) {
+        foreach ( $this->roles as $role )
+        {
+            if ( $role->name == $name )
+            {
                 return true;
             }
         }

@@ -16,6 +16,7 @@ class CreateProductsTable extends Migration {
         {
             $table->increments('id');
             $table->string('name');
+            $table->string('slug');
             $table->text('desc');
             $table->integer('stock')->unsigned();
             $table->decimal('price');

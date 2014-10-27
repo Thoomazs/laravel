@@ -1,8 +1,18 @@
-<?php namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers\Shop;
 
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\BaseController;
 
-class Shop/ProductController extends Controller {
+use App\Http\Repositories\ProductsRepository;
+use App\Product;
+
+class ProductsController extends BaseController {
+
+    protected $repository;
+
+    function __construct( ProductsRepository $repository )
+    {
+        $this->repository = $repository;
+    }
 
 	/**
 	 * Display a listing of the resource.
@@ -11,27 +21,9 @@ class Shop/ProductController extends Controller {
 	 */
 	public function index()
 	{
-		//
-	}
+        $products = $this->repository->all();
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
-
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
+		return view('site.products.index', compact('products') );
 	}
 
 	/**
@@ -40,42 +32,9 @@ class Shop/ProductController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show(Product $product)
 	{
-		//
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
+        return view('site.products.show', compact('product') );
 	}
 
 }

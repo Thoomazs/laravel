@@ -41,6 +41,7 @@
                     <tr>
                         <th class="id">{{ trans('ID') }}</th>
                         <th>{{ trans('Name') }}</th>
+                        <th>{{ trans('Slug') }}</th>
                         <th>{{ trans('Action') }}</th>
                     </tr>
                 </thead>
@@ -55,6 +56,9 @@
                             </td>
                             <td>
                                 {{ $category->name }}
+                            </td>
+                            <td>
+                                {{ $category->slug }}
                             </td>
                             <td class="actions">
                                 <a class="update btn btn-xs btn-default" href="{{ route('admin.categories.edit', [$category->id] ) }}" title="Edit">

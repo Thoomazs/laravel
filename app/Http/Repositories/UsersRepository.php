@@ -282,8 +282,7 @@
         private function _addSlug( array $user )
         {
 
-
-            $slug      = $user[ "firstname" ]."-".$user[ "lastname" ];
+            $slug      = $this->_slugify($user[ "firstname" ]." ".$user[ "lastname" ]);
             $test_slug = ( isset( $user[ "slug" ] ) && !empty( $user[ "slug" ] ) ) ? $user[ "slug" ] : $slug;
 
             $i = 0;
@@ -296,6 +295,5 @@
 
             return $user;
         }
-
 
     }

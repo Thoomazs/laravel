@@ -13,7 +13,7 @@ function Helpers() {
 
         // auto resize
         if ( $.fn.yaar )
-            $( "textarea[data-resize='true']" ).attr("rows",3).yaar();
+            $( "textarea[data-resize='true']" ).attr( "rows", 3 ).yaar();
 
         // magnific popup
         if ( $.fn.magnificPopup ) {
@@ -117,6 +117,29 @@ function Helpers() {
                 max      : [22, 0]
             } );
         }
+
+        // form file
+        $( ".form-file input[type='file']" ).off( "change" ).on( "change", function() {
+            var $this = $( this );
+            var file = $this.val().split( "\\" ).pop();
+            var $file = $this.closest( '.form-file' );
+            var $span = $file.find( 'span' );
+
+            if ( file !== "" ) {
+                $span.text( file );
+                $file.addClass('active');
+            }
+            else {
+                $span.text( $span.data( 'title' ) );
+                $file.removeClass('active');
+            }
+        } );
+
+        $( ".form-select select" ).off( "change" ).on( "change", function() {
+            var $this = $(this);
+            var $select = $this.closest(".form-select");
+            $select.addClass('active');
+        });
 
         //height
         if ( $( "[data-height]" ).length > 0 ) {

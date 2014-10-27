@@ -21,8 +21,8 @@
 
         <ul class="nav navbar-nav">
             @section('nav')
-                <li class="{{ ( Request::url() == route('home') ? 'active' : '' ) }}">
-                    <a href="{{{ route('home') }}}">Home</a>
+                <li class="{{ ( controller() == 'Products' ? 'active' : '' ) }}">
+                    <a href="{{{ route('products.index') }}}">{{ trans('Products') }}</a>
                 </li>
             @show
         </ul>
@@ -34,7 +34,7 @@
 
                     @if( Auth::user()->hasRole('Admin') )
                         <li>
-                            <a href="{{{ route('admin') }}}">Admin Panel</a>
+                            <a href="{{{ route('admin') }}}">{{ trans('Admin') }}</a>
                         </li>
                     @endif
 
@@ -42,14 +42,14 @@
                         <a href="{{ route('my-account.profile') }}">{{{ Auth::user()->name }}}</a>
                     </li>
                     <li>
-                        <a href="{{ route('auth.logout') }}">Logout</a>
+                        <a href="{{ route('auth.logout') }}">{{ trans('Logout') }}</a>
                     </li>
                 @else
                     <li class="{{ ( Request::url() == route('auth.login') ? ' active' : '') }}">
-                        <a href="{{ route('auth.login') }}">Login</a>
+                        <a href="{{ route('auth.login') }}">{{ trans('Login') }}</a>
                     </li>
                     <li class="{{ ( Request::url() == route('auth.register') ? ' active' : '') }}">
-                        <a href="{{ route('auth.register') }}">Register</a>
+                        <a href="{{ route('auth.register') }}">{{ trans('Register') }}</a>
                     </li>
                 @endif
 

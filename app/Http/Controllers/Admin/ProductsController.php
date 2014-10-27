@@ -1,11 +1,13 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\AdminController;
+
+use App\Http\Requests\Product\ProductRequest;
+use Illuminate\Http\Request;
+
 use App\Http\Repositories\CategoriesRepository;
 use App\Http\Repositories\ProductsRepository;
-use App\Http\Requests\Product\ProductRequest;
 use App\Product;
-use Illuminate\Http\Request;
 
 class ProductsController extends AdminController
 {

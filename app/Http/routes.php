@@ -67,8 +67,8 @@
 
         Route::resource( 'log', 'App\Http\Controllers\Admin\LogController', [ 'only' => 'index' ] );
 
-        Route::get( '/', [ 'as' => 'admin', 'uses' => 'App\Http\Controllers\AdminController@showDashboard' ] );
-        Route::get( '/', [ 'as' => 'admin.settings', 'uses' => 'App\Http\Controllers\AdminController@getSetting' ] );
+        Route::get( '/', [ 'as' => 'admin', 'uses' => 'App\Http\Controllers\AdminController@getDashboard' ] );
+        Route::get( 'settings', [ 'as' => 'admin.settings', 'uses' => 'App\Http\Controllers\AdminController@getSetting' ] );
     } );
 
 
@@ -108,6 +108,22 @@
         get( 'profile', [ 'as' => 'my-account.profile', 'uses' => 'App\Http\Controllers\User\MyAccountController@getProfile' ] );
 
     } );
+
+
+    /*
+        |--------------------------------------------------------------------------
+        | Shop site Routes
+        |--------------------------------------------------------------------------
+        |
+        */
+
+    Route::bind( "product", function ( $slug )
+    {
+        return App\Product::whereSlug( $slug )->first();
+    } );
+
+    get( 'products', [ 'as' => 'products.index', 'uses' => 'App\Http\Controllers\Shop\ProductsController@index' ] );
+    get( 'product/{product}', [ 'as' => 'products.detail', 'uses' => 'App\Http\Controllers\Shop\ProductsController@show' ] );
 
 
     /*

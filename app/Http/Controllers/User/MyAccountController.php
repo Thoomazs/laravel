@@ -16,7 +16,7 @@ class MyAccountController extends BaseController {
      */
     public function getProfile()
     {
-        return view('site.user.profile');
+        return view('site.users.profile');
     }
 
 }

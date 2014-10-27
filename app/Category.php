@@ -18,7 +18,7 @@ class Category extends Model
      */
     protected $hidden = [ ];
 
-    protected $fillable = [ 'name', 'desc' ];
+    protected $fillable = [ 'name', 'desc', 'superior_id' ];
 
     public function products()
     {

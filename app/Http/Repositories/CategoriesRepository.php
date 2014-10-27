@@ -66,16 +66,18 @@
             return $this->_all()->get();
         }
 
-        public function optionArray()
+        public function optionArray(array $categories = null)
         {
 
-            $categories = $this->all();
+            if( is_null($categories) ) {
+                $categories = $this->all()->toArray();
+            }
 
             $result = [ ];
 
             foreach ( $categories as $v )
             {
-                $result[ $v->id ] = $v->name;
+                $result[ $v["id"] ] = $v["name"];
             }
 
             return $result;

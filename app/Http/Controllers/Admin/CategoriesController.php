@@ -43,8 +43,9 @@ class CategoriesController extends AdminController
     public function create( ProductsRepository $productsRepository )
     {
         $products = $productsRepository->optionArray();
+        $categories = $this->repository->optionArray();
 
-        return view( 'admin.categories.create', compact( 'products' ) );
+        return view( 'admin.categories.create', compact( 'products', 'categories' ) );
     }
 
     /**
@@ -96,8 +97,11 @@ class CategoriesController extends AdminController
         }
 
         $products = $productsRepository->optionArray();
+        $categories = $this->repository->optionArray();
 
-        return view( 'admin.categories.edit', compact( 'category', 'products' ) );
+        $categories = array_diff_key($categories,[$category->id => 'This category']);
+
+        return view( 'admin.categories.edit', compact( 'category', 'products', 'categories' ) );
     }
 
     /**

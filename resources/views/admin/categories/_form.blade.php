@@ -16,10 +16,23 @@
 
         {!! $errors->first('desc', '<div class="form-error">:message</div>') !!}
 
-        {!! Form::textarea('desc', null, ['class' => 'form-control', 'autocomplete' => 'off', 'data-resize' => 'true']) !!}
+        {!! Form::textarea('desc', null, ['class' => 'form-control', 'rows' => 3, 'autocomplete' => 'off', 'data-resize' => 'true']) !!}
     </div>
 
-<!-- Products Form Select -->
+    <!-- Superior Form Select -->
+
+    <div class="form-group {{ $errors->has('superior_id') ? 'has-error' : '' }}">
+        {!! Form::label('superior', trans('Superior') . ':') !!}
+
+        <div class="form-select">
+            {!! $errors->first('superior_id', '<div class="form-error">:message</div>') !!}
+
+            {!! Form::select('superior_id', [0 => trans('Vyberte možnost.')] + $categories, null, ['class'=>'form-control','autocomplete' => 'off']) !!}
+        </div>
+    </div>
+
+
+    <!-- Products Form Select -->
 
     <div class="form-group {{ $errors->has('products') ? 'has-error' : '' }}">
         {!! Form::label('products', trans('Products') . ':') !!}

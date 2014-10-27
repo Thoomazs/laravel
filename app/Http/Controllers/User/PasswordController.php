@@ -38,7 +38,7 @@ class PasswordController extends BaseController
      */
     public function showResetRequestForm()
     {
-        return view( 'site.user.password.reset-request' );
+        return view( 'site.users.password.reset-request' );
     }
 
     /**
@@ -80,7 +80,7 @@ class PasswordController extends BaseController
             throw new NotFoundHttpException;
         }
 
-        return view( 'site.user.password.reset' )->with( 'token', $token );
+        return view( 'site.users.password.reset' )->with( 'token', $token );
     }
 
     /**

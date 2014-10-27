@@ -14,10 +14,17 @@ class CreateCategoriesTable extends Migration {
 	{
         Schema::create('categories', function(Blueprint $table)
         {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->string('name');
+            $table->integer('superior_id')->unsigned()->nullable();
             $table->text('desc');
             $table->timestamps();
+
+        });
+
+        Schema::table('categories', function(Blueprint $table)
+        {
+            $table->foreign( 'superior_id' )->references( 'id' )->on( 'categories' )->onUpdate( 'cascade' )->onDelete( 'set null' );
         });
 
         Schema::create( 'products_category', function ( $table )
@@ -29,6 +36,7 @@ class CreateCategoriesTable extends Migration {
             $table->foreign( 'category_id' )->references( 'id' )->on( 'categories' )->onUpdate( 'cascade' )->onDelete( 'cascade' );
 
         } );
+
 	}
 
 	/**
@@ -44,8 +52,10 @@ class CreateCategoriesTable extends Migration {
             $table->dropForeign( 'products_category_category_id_foreign' );
         } );
 
-        Schema::drop( 'products_category' );
+
         Schema::drop( 'categories' );
+        Schema::drop( 'products_category' );
+
 	}
 
 }

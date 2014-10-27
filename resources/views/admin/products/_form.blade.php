@@ -16,7 +16,7 @@
 
         {!! $errors->first('desc', '<div class="form-error">:message</div>') !!}
 
-        {!! Form::textarea('desc', null, ['class' => 'form-control', 'autocomplete' => 'off', 'data-resize' => 'true']) !!}
+        {!! Form::textarea('desc', null, ['class' => 'form-control', 'rows' => 3, 'autocomplete' => 'off', 'data-resize' => 'true']) !!}
     </div>
 
     <!-- Stock Form Input -->

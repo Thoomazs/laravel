@@ -32,7 +32,7 @@ class AuthController extends BaseController
      */
     public function showRegistrationForm()
     {
-        return view( 'site.user.auth.register' );
+        return view( 'site.users.auth.register' );
     }
 
     /**
@@ -58,7 +58,7 @@ class AuthController extends BaseController
      */
     public function showLoginForm()
     {
-        return view( 'site.user.auth.login' );
+        return view( 'site.users.auth.login' );
     }
 
     /**

@@ -1,17 +1,14 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\BaseController;
+use App\Http\Controllers\AdminController;
 
-use App\Http\Repositories\UserRepository;
+use App\Http\Repositories\UsersRepository;
+use App\User;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\DestroyUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
-
-use App\User;
-
-
 
 /**
  * Class UsersController
@@ -20,7 +17,7 @@ use App\User;
  * @Middleware("admin")
  *
  */
-class UsersController extends BaseController
+class UsersController extends AdminController
 {
 
     /**
@@ -32,7 +29,7 @@ class UsersController extends BaseController
     /**
      * @param User $user
      */
-    function __construct( UserRepository $repository )
+    function __construct( UsersRepository $repository )
     {
         parent::__construct();
 
@@ -127,7 +124,9 @@ class UsersController extends BaseController
      */
     public function update( UpdateUserRequest $request )
     {
-        $this->repository->update( $request->all() );
+        $user = $this->repository->update( $request->all() );
+
+        $this->flash( trans( 'User #'.$user->id.' '.$user->name.' was updated.' ));
 
         return redirect()->route( "admin.users.index" );
     }

@@ -14,7 +14,7 @@ class Log extends Model
      */
     protected $hidden = [ ];
 
-    protected $fillable =[ 'level', 'message', 'ip' ];
+    protected $fillable =[ 'level', 'message', 'ip', 'user_id' ];
 
     public function getIconAttribute()
     {

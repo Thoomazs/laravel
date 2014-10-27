@@ -1,8 +1,8 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\BaseController;
+use App\Http\Controllers\AdminController;
 
-use App\Http\Repositories\UserRepository;
+use App\Http\Repositories\UsersRepository;
 
 use Illuminate\Http\Request;
 
@@ -17,7 +17,7 @@ use App\role;
  * @Middleware("admin")
  *
  */
-class RolesController extends BaseController
+class RolesController extends AdminController
 {
 
     /**
@@ -29,7 +29,7 @@ class RolesController extends BaseController
     /**
      * @param role $role
      */
-    function __construct( UserRepository $repository )
+    function __construct( UsersRepository $repository )
     {
         parent::__construct();
 

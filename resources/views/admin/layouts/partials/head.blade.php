@@ -31,5 +31,8 @@
 ================================================== -->
 <script type="text/javascript" src="{{ asset("js/jquery/jquery.min.js") }}"></script>
 <script type="text/javascript" src="{{ asset("js/helpers/bootstrap.min.js") }}"></script>
+
+<script type="text/javascript" src="{{ asset("js/jquery/plugins/jquery.yaar.min.js") }}"></script>
+
 <script type="text/javascript" src="{{ asset("js/helpers/Helpers.js") }}"></script>
 <script type="text/javascript" src="{{ asset("js/admin.js") }}"></script>

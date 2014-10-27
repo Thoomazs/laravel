@@ -1,8 +1,8 @@
 <?php
     namespace App\Http\Repositories;
 
-    use App\User;
     use App\Role;
+    use App\User;
     use Illuminate\Contracts\Auth\Guard as Auth;
     use Illuminate\Contracts\Auth\PasswordBroker as Password;
     use Illuminate\Log\Writer as Log;
@@ -15,7 +15,7 @@
      *
      * @package App\Http\Repositories
      */
-    class UserRepository extends BaseRepository
+    class UsersRepository extends BaseRepository
     {
 
         /**
@@ -75,13 +75,18 @@
             return $this;
         }
 
+        protected function _all()
+        {
+            return $this->user->with( "roles" )->orderBy( "lastname", "ASC" )->orderBy( "firstname", "ASC" );
+        }
+
         /**
          * @return Collection
          */
         public function all()
         {
 
-            return $this->user->with("roles")->orderBy( "lastname", "ASC" )->orderBy( "firstname", "ASC" )->get();
+            return $this->_all()->get();
         }
 
         /**
@@ -89,9 +94,9 @@
          *
          * @return Collection
          */
-        public function paginate( $perPage = 10 )
+        public function paginate( $perPage = 50 )
         {
-            $all = $this->user->with( "roles" )->orderBy( "lastname", "ASC" )->orderBy( "firstname", "ASC" )->paginate( $perPage );
+            $all = $this->_all()->paginate( $perPage );
 
             //            $paginator = new Paginator( $all, $perPage, Paginator::resolveCurrentPage(), [ "path" => Paginator::resolveCurrentPath() ] );
 
@@ -105,9 +110,10 @@
             return $all;
         }
 
+
         public function createRole( $role_data )
         {
-            if ( isset( $role_data["id"] ) )
+            if ( isset( $role_data[ "id" ] ) )
             {
                 return null;
             }
@@ -123,13 +129,23 @@
 
         public function updateRole( $role_data )
         {
-            $role = Role::find( $role_data["id"] );
+            $role = Role::find( $role_data[ "id" ] );
             $role->fill( $role_data );
             $role->save();
 
             $this->log->info( "Role updated:\n\n ".var_export( $role->toArray(), true ) );
 
             return $role;
+        }
+
+
+        protected function _createOrUpdate( User $user, array $user_data )
+        {
+
+            $user_data = $this->_addSlug( $user_data );
+
+            $user->fill( $user_data );
+            $user->save();
         }
 
         /**
@@ -139,16 +155,14 @@
          */
         public function create( $user_data )
         {
-            if ( isset( $user_data["id"] ) )
+            if ( isset( $user_data[ "id" ] ) )
             {
                 return null;
             }
 
-            $user_data = $this->_addSlug( $user_data );
-
             $user = new User;
-            $user->fill( $user_data );
-            $user->save();
+
+            $this->_createOrUpdate( $user, $user_data );
 
             $this->log->info( "User created:\n\n ".var_export( $user->toArray(), true ) );
 
@@ -232,11 +246,9 @@
          */
         public function update( $user_data )
         {
-            $user_data = $this->_addSlug( $user_data );
+            $user = User::find( $user_data[ "id" ] );
 
-            $user = User::find( $user_data["id"] );
-            $user->fill( $user_data );
-            $user->save();
+            $this->_createOrUpdate( $user, $user_data );
 
             $this->log->info( "User updated:\n\n ".var_export( $user->toArray(), true ) );
 

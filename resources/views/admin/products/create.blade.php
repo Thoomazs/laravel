@@ -6,11 +6,11 @@
     <div class="col-sm-6 col-sm-offset-3">
 
         <div class="well">
-            {!! Form::open([ 'route' => 'admin.users.store', 'method' => 'POST', 'autocomplete' => 'off', 'novalidate', 'class' => 'form-basic' ]) !!}
+            {!! Form::open([ 'route' => 'admin.products.store', 'method' => 'POST', 'autocomplete' => 'off', 'novalidate', 'class' => 'form-basic' ]) !!}
                 <fieldset>
-                    <legend>{{ trans('New user') }}</legend>
+                    <legend>{{ trans('New product') }}</legend>
 
-                    @include('admin.users._form')
+                    @include('admin.products._form')
 
                     <!-- Store Form Submit -->
 

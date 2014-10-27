@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php namespace App\Http\Controllers;
 
 use App\Http\Controllers\BaseController;
 
@@ -7,7 +7,7 @@ use App\Http\Controllers\BaseController;
  * @Middleware("admin")
  *
  */
-class DashboardController extends BaseController
+class AdminController extends BaseController
 {
 
     function  __construct( )
@@ -18,10 +18,16 @@ class DashboardController extends BaseController
     /**
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function getDashboard()
     {
 
         return view( "admin.welcome" );
+    }
+
+    public function getSettings()
+    {
+
+        return view( "admin.settings" );
     }
 
 

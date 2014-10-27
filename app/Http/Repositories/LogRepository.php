@@ -2,6 +2,7 @@
     namespace App\Http\Repositories;
 
     use App\Log;
+    use \Illuminate\Auth\Guard as Auth;
     //use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 //    use Illuminate\Pagination\Paginator as Paginator;
 
@@ -9,11 +10,13 @@
     {
 
         protected $log;
+        protected $auth;
 
 
-        function __construct( Log $log )
+        function __construct( Log $log, Auth $auth )
         {
             $this->log = $log;
+            $this->auth = $auth;
         }
 
         /**
@@ -28,13 +31,18 @@
             return $this;
         }
 
+        protected  function _all()
+        {
+            return $this->log->with( "user" )->orderBy( "id", "DESC" );
+        }
+
         /**
          * @return mixed
          */
         public function all()
         {
 
-            return $this->log->with( "user" )->orderBy( "id", "DESC" )->get();
+            return $this->_all()->get();
         }
 
         /**
@@ -44,12 +52,10 @@
          */
         public function paginate( $perPage = 100 )
         {
-            $all = $this->log->with( "user" )->orderBy( "id", "DESC" )->paginate( $perPage );
+            $all = $this->_all()->paginate( $perPage );
 
 //            $paginator = new Paginator( $all, $perPage, Paginator::resolveCurrentPage(), [ "path" => Paginator::resolveCurrentPath() ] );
 
             return $all;
         }
-
-
     }

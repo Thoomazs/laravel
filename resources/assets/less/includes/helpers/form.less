@@ -1,5 +1,9 @@
 form {
     @error: #a94442;
+
+    legend {
+        border-bottom: 1px solid @border;
+    }
     .form-group {
         position: relative;
 
@@ -57,6 +61,15 @@ form {
             .form-error {
                 bottom: -1px;
                 z-index: 1;
+            }
+        }
+
+        .list-group {
+            list-style: none;
+
+            .list-group-item {
+                border-color: @border;
+                padding: 6px 10px;
             }
         }
 
@@ -133,5 +146,18 @@ form {
                 }
             }
         }
+
+        & + hr {
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    hr {
+        border-top: 1px solid @border;
     }
 }

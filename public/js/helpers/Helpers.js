@@ -13,7 +13,7 @@ function Helpers() {
 
         // auto resize
         if ( $.fn.yaar )
-            $( "textarea[data-resize='true']" ).yaar();
+            $( "textarea[data-resize='true']" ).attr("rows",3).yaar();
 
         // magnific popup
         if ( $.fn.magnificPopup ) {

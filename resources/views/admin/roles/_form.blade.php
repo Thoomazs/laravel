@@ -9,4 +9,6 @@
         {!! Form::text('name', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
     </div>
 
+    <hr/>
+
 

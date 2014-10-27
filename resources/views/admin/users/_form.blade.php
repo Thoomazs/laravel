@@ -49,3 +49,4 @@
         {!! Form::password('password_confirmation', ['class' => 'form-control', 'autocomplete' => 'off']) !!}
     </div>
 
+    <hr/>

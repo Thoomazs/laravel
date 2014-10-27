@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Repositories\UserRepository;
+use App\Http\Repositories\UsersRepository;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 
@@ -19,7 +19,7 @@ class AuthController extends BaseController
     /**
      * @param UserRepository $repository
      */
-    public function __construct( UserRepository $repository )
+    public function __construct( UsersRepository $repository )
     {
         $this->repository = $repository;
     }

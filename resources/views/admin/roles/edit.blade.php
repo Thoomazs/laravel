@@ -5,23 +5,30 @@
 <div class="row margin-top">
     <div class="col-sm-6 col-sm-offset-3">
 
-        {!! Form::model($role, ['route' => ['admin.roles.update',$role->id], 'method' => 'PATCH']) !!}
+        <div class="well">
+            {!! Form::model($role, ['route' => ['admin.roles.update',$role->id], 'method' => 'PATCH']) !!}
 
-        <fieldset>
+            <fieldset>
 
-            {!! Form::hidden('id', $role->id) !!}
+                {!! Form::hidden('id', $role->id) !!}
 
-            <legend>
-                #{{ $role->id }} {{ $role->name }}
-            </legend>
+                <legend>
+                    #{{ $role->id }} {{ $role->name }}
+                </legend>
 
-            @include("admin.roles._form")
+                @include("admin.roles._form")
 
-            {!! Form::button( trans('Edit'), array('type' => 'submit', 'class' => 'btn btn-success btn-block')); !!}
+                <!-- Edit Form Submit -->
 
-        </fieldset>
+                <div class="form-group">
+                    {!! Form::button(trans('Edit'), ['type' => 'submit', 'class' => 'btn btn-primary form-control']) !!}
+                </div>
 
-        {!! Form::close() !!}
+
+            </fieldset>
+
+            {!! Form::close() !!}
+        </div>
     </div>
 </div>
 @stop

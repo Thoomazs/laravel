@@ -277,6 +277,9 @@ hr.darker {
   line-height: 30px;
   vertical-align: middle;
 }
+form legend {
+  border-bottom: 1px solid #cccccc;
+}
 form .form-group {
   position: relative;
 }
@@ -340,6 +343,13 @@ form .form-group .form-select::after {
 form .form-group .form-select .form-error {
   bottom: -1px;
   z-index: 1;
+}
+form .form-group .list-group {
+  list-style: none;
+}
+form .form-group .list-group .list-group-item {
+  border-color: #cccccc;
+  padding: 6px 10px;
 }
 form .form-group.has-error .form-select {
   border: 1px solid #a94442;
@@ -410,6 +420,16 @@ form .form-group .radio input[type="radio"]:checked + label:before {
 form .form-group.has-error .checkbox label::before,
 form .form-group.has-error .radio label::before {
   border: 1px solid #a94442;
+}
+form .form-group + hr {
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+form .form-group:last-child {
+  margin-bottom: 0;
+}
+form hr {
+  border-top: 1px solid #cccccc;
 }
 #admin body {
   background: white;

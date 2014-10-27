@@ -15,10 +15,16 @@
     {
         $log = new \App\Log();
 
-        if( Auth::check() ) $user = Auth::user()->id;
-        else $user = null;
+        if ( Auth::check() )
+        {
+            $user = (int)Auth::user()->id;
+        }
+        else
+        {
+            $user = null;
+        }
 
-                $log->create( [ "level" => $level, "user_id" => $user, "message" => $message, "ip" => Request::ip() ] );
+        $log->create( [ "level" => $level, "user_id" => $user, "message" => $message, "ip" => Request::ip() ] );
     } );
     /*
     |--------------------------------------------------------------------------
@@ -28,7 +34,7 @@
     */
 
 
-    Route::group( [ 'prefix' => 'admin' ], function ()
+    Route::group( [ 'prefix' => 'admin', 'middleware' => [ 'admin' ] ], function ()
     {
 
         Route::bind( "users", function ( $id )
@@ -36,13 +42,33 @@
             return App\User::find( $id );
         } );
 
+        Route::bind( "roles", function ( $id )
+        {
+            return App\Role::find( $id );
+        } );
+
+        Route::bind( "products", function ( $id )
+        {
+            return App\Product::find( $id );
+        } );
+
+        Route::bind( "categories", function ( $id )
+        {
+            return App\Category::find( $id );
+        } );
+
         Route::resource( 'users', 'App\Http\Controllers\Admin\UsersController' );
 
-        //        Route::resource( 'product', 'Admin\ProductsController' );
+        Route::resource( 'roles', 'App\Http\Controllers\Admin\RolesController' );
+
+        Route::resource( 'products', 'App\Http\Controllers\Admin\ProductsController' );
+
+        Route::resource( 'categories', 'App\Http\Controllers\Admin\CategoriesController' );
 
         Route::resource( 'log', 'App\Http\Controllers\Admin\LogController', [ 'only' => 'index' ] );
 
-        Route::get( '/', [ 'as' => 'admin', 'uses' => 'App\Http\Controllers\Admin\AdminController@getWelcome' ] );
+        Route::get( '/', [ 'as' => 'admin', 'uses' => 'App\Http\Controllers\AdminController@showDashboard' ] );
+        Route::get( '/', [ 'as' => 'admin.settings', 'uses' => 'App\Http\Controllers\AdminController@getSetting' ] );
     } );
 
 
@@ -53,20 +79,35 @@
     |
     */
 
+    Route::group( [ 'middleware' => [ 'guest' ] ], function ()
+    {
+        // Login & Register
 
-    //    Route::controller( 'password', [ 'uses' => 'Auth\RemindersController'] );
+        get( 'register', [ 'as' => 'auth.register', 'uses' => 'App\Http\Controllers\User\AuthController@showRegistrationForm' ] );
+        post( 'register', 'App\Http\Controllers\User\AuthController@register' );
+        get( 'login', [ 'as' => 'auth.login', 'uses' => 'App\Http\Controllers\User\AuthController@showLoginForm' ] );
+        post( 'login', 'App\Http\Controllers\User\AuthController@login' );
 
-    get( 'register', [ 'as' => 'auth.register', 'uses' => 'Auth\AuthController@showRegistrationForm' ] );
+        // Password Reminders
 
-    post( 'register', 'Auth\AuthController@register' );
+        get( 'forget-password', [ 'as' => 'password.reset-request', 'uses' => 'App\Http\Controllers\User\PasswordController@showResetRequestForm' ] );
+        post( 'forget-password', [ 'uses' => 'App\Http\Controllers\User\PasswordController@sendResetLink' ] );
+        get( 'reset-password/{token}  ', [ 'as' => 'password.reset.token', 'uses' => 'App\Http\Controllers\User\PasswordController@showResetForm' ] );
+        post( 'reset-password', [ 'as' => 'password.reset', 'uses' => 'App\Http\Controllers\User\PasswordController@resetPassword' ] );
 
-    get( 'login', [ 'as' => 'auth.login', 'uses' => 'Auth\AuthController@showLoginForm' ] );
+    } );
 
-    post( 'login', 'Auth\AuthController@login' );
+    Route::group( [ 'middleware' => [ 'auth' ] ], function ()
+    {
+        // Logout
 
-    get( 'logout', [ 'as' => 'auth.logout', 'uses' => 'Auth\AuthController@logout' ] );
+        get( 'logout', [ 'as' => 'auth.logout', 'uses' => 'App\Http\Controllers\User\AuthController@logout' ] );
 
-    get( 'profile', [ 'as' => 'my-account.profile', 'uses' => 'Auth\MyAccountController@getProfile' ] );
+        // User profile
+
+        get( 'profile', [ 'as' => 'my-account.profile', 'uses' => 'App\Http\Controllers\User\MyAccountController@getProfile' ] );
+
+    } );
 
 
     /*
@@ -76,5 +117,4 @@
     |
     */
 
-    get( '/', array( 'as' => 'home', 'uses' => 'HomeController@index' ) );
-    post( '/', array( 'uses' => 'HomeController@postIndex' ) );
+    get( '/', array( 'as' => 'home', 'uses' => 'App\Http\Controllers\HomeController@index' ) );

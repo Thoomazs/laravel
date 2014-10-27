@@ -54,7 +54,7 @@ class CreateOrdersTable extends Migration {
             $table->dropForeign( 'orders_payment_id_foreign' );
             $table->dropForeign( 'orders_shipping_address_id_foreign' );
             $table->dropForeign( 'orders_delivery_address_id_foreign' );
-            $table->dropForeign( 'orders_delivery_status_id_foreign' );
+            $table->dropForeign( 'orders_status_id_foreign' );
         } );
 
 		Schema::drop('orders');

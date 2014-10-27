@@ -44,6 +44,7 @@ class CreateCategoriesTable extends Migration {
             $table->dropForeign( 'products_category_category_id_foreign' );
         } );
 
+        Schema::drop( 'products_category' );
         Schema::drop( 'categories' );
 	}
 

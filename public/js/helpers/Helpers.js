@@ -117,8 +117,23 @@ function Helpers() {
                 max      : [22, 0]
             } );
         }
+        $( ".form-file input[type='file']" ).on("click", function() {
+            console.log("ads");
+        });
 
-        // form file
+        // form fix
+        $("form" ).on("submit", function() {
+            var $form = $(this);
+            var $files = $form.find("input[type='file']" );
+            if( $files.length > 0 ) {
+                $files.each( function() {
+                    var $this = $(this);
+
+                    if( $this.val() == "") $this.attr("disabled", "disabled");
+                })
+            }
+        });
+
         $( ".form-file input[type='file']" ).off( "change" ).on( "change", function() {
             var $this = $( this );
             var file = $this.val().split( "\\" ).pop();
@@ -328,9 +343,9 @@ function Helpers() {
     };
 
     // constructor after DOM load
-    var $this = this;
+    var _this = this;
     $( function() {
-        $this.init();
+        _this.init();
     } )
 }
 

@@ -2,9 +2,9 @@
     namespace App\Http\Repositories;
 
     use App\Product;
+    use Illuminate\Filesystem\Filesystem;
     use Illuminate\Log\Writer as Log;
     use Illuminate\Session\Store as Session;
-    use Illuminate\Filesystem\Filesystem;
 
     //use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 
@@ -88,34 +88,57 @@
 
             $products = $this->all();
 
-            $result = [];
+            $result = [ ];
 
-            foreach($products as $v)
+            foreach ( $products as $v )
             {
-                $result[$v->id] = $v->name;
+                $result[ $v->id ] = $v->name;
             }
+
             return $result;
         }
 
 
-        protected function _createOrUpdate(Product $product, array $product_data)
+        protected function _createOrUpdate( Product $product, array $product_data )
         {
 
-            $product_data = $this->_addSlug($product_data);
+            $product_data = $this->_addSlug( $product_data );
+
+            if ( $this->filesystem->isFile( $product->image ) )
+            {
+                $this->filesystem->delete( $product->image );
+            }
+
 
             $product->fill( $product_data );
             $product->save();
 
-
-            if( $product_data["image"] ) {
-                $this->filesystem->makeDirectory( ($path = public_path() . '/uploads/products/' . $product["id"]), 0755, true);
-                $filename = str_random(12);
-                $product_data["image"]->move($path, $filename);
+            if ( isset( $product_data[ "image" ] ) )
+            {
+                $this->_uploadImage( $product, $product_data[ "image" ] );
             }
 
-            $product_data[ 'categories' ] = (isset($product_data[ 'categories' ])) ? $product_data[ 'categories' ] : [];
+            $product_data[ 'categories' ] = ( isset( $product_data[ 'categories' ] ) ) ? $product_data[ 'categories' ] : [ ];
             $product->categories()->sync( $product_data[ 'categories' ] );
 
+            $product->save();
+
+
+        }
+
+        protected function _uploadImage( Product $product, $file )
+        {
+            $path = public_path()."/uploads/products/".$product->id."/";
+            $filename = str_random( 12 ) .'.' .$file->guessClientExtension();
+
+            if ( !$this->filesystem->isDirectory( $path ) )
+            {
+                $this->filesystem->makeDirectory( $path, 0755, true );
+            }
+
+            $file->move($path, $filename);
+
+            $product->image =  "/uploads/products/".$product->id."/".$filename;
             $product->save();
         }
 
@@ -133,9 +156,9 @@
 
             $product = new Product;
 
-            $this->_createOrUpdate($product, $product_data);
+            $this->_createOrUpdate( $product, $product_data );
 
-            $this->log->info( "Product created:\n\n ".var_export( $product->with('categories')->first()->toArray(), true ) );
+            $this->log->info( "Product created:\n\n ".var_export( $product->with( 'categories' )->first()->toArray(), true ) );
 
             return $product;
         }
@@ -150,9 +173,9 @@
         {
             $product = Product::find( $product_data[ "id" ] );
 
-            $this->_createOrUpdate($product, $product_data);
+            $this->_createOrUpdate( $product, $product_data );
 
-            $this->log->info( "Product updated:\n\n ".var_export( $product->with('categories')->first()->toArray(), true ) );
+            $this->log->info( "Product updated:\n\n ".var_export( $product->with( 'categories' )->first()->toArray(), true ) );
 
             return $product;
 
@@ -166,7 +189,9 @@
          */
         public function destroy( $product )
         {
-            if ( $this->product->destroy( $product->id ) )
+            $path = public_path().'/uploads/products/'.$product->id;
+
+            if (  $this->filesystem->deleteDirectory($path) && $this->product->destroy( $product->id ))
             {
                 $this->log->info( "Product deleted:\n\n ".var_export( $product->toArray(), true ) );
 
@@ -180,7 +205,7 @@
         {
 
 
-            $slug      = $this->_slugify($product[ "name" ]);
+            $slug      = $this->_slugify( $product[ "name" ] );
             $test_slug = ( isset( $product[ "slug" ] ) && !empty( $product[ "slug" ] ) ) ? $product[ "slug" ] : $slug;
 
             $i = 0;

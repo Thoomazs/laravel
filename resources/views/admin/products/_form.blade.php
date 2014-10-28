@@ -17,8 +17,13 @@
         {!! $errors->first('image', '<div class="form-error">:message</div>') !!}
 
         <div class="form-file">
-                <span class="text" data-title="{{ trans('vyberte soubor') }}">{{ trans('vyberte soubor') }}</span>
-                {!! Form::file('image', ['class' => 'form-control', 'autocomplete' => 'off']) !!}
+            @if(isset($product))
+                <a href="{{ $product->photo }}" data-popup='true'>
+                    <img src="{{ $product->photo }}"/>
+                </a>
+            @endif
+            <span class="text" data-title="{{ trans('vyberte soubor') }}">{{ trans('vyberte soubor') }}</span>
+            {!! Form::file('image', ['class' => 'form-control', 'autocomplete' => 'off']) !!}
         </div>
 
     </div>

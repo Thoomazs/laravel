@@ -6,7 +6,7 @@
     <div class="col-sm-6 col-sm-offset-3">
     <div class="well">
 
-        {!! Form::model($product, ['route' => ['admin.products.update',$product->id], 'method' => 'PATCH',  'files' => true]) !!}
+        {!! Form::model($product, ['route' => ['admin.products.update', $product->id], 'method' => 'PATCH',  'files' => true]) !!}
 
         <fieldset>
 
@@ -17,6 +17,7 @@
             </legend>
 
             @include("admin.products._form")
+
 
             <!-- Edit Form Submit -->
 

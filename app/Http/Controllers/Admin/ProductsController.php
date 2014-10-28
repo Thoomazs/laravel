@@ -56,7 +56,6 @@ class ProductsController extends AdminController
      */
     public function store( ProductRequest $request )
     {
-
         $product = $this->repository->create( $request->all() );
 
         if ( is_null( $product ) )
@@ -111,6 +110,8 @@ class ProductsController extends AdminController
      */
     public function update( ProductRequest $request )
     {
+
+
         $product = $this->repository->update( $request->all() );
 
         $this->flash( trans( 'Product #'.$product->id.' '.$product->name.' was updated.' ) );

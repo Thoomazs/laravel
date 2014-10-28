@@ -18,10 +18,16 @@ class Product extends Model
      */
     protected $hidden = [ ];
 
-    protected $fillable = [ 'name', 'desc', 'price', 'stock', 'slug' ];
+    protected $fillable = [ 'name', 'desc', 'price', 'stock', 'slug', 'image' ];
 
     public function categories()
     {
         return $this->belongsToMany( 'App\Category', "products_category",  "product_id", "category_id" );
+    }
+
+    public function getPhotoAttribute()
+    {
+        if( is_file( public_path().$this->image ) ) return $this->image;
+        else return 'http://placehold.it/512x512';
     }
 }

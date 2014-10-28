@@ -413,6 +413,15 @@ form .form-group .form-file input[type='file'] {
   left: 0;
   z-index: 1;
 }
+form .form-group .form-file a {
+  position: relative;
+  top: -2px;
+  left: -7px;
+  z-index: 9;
+}
+form .form-group .form-file a img {
+  height: 24px;
+}
 form .form-group .list-group {
   list-style: none;
 }

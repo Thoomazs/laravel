@@ -21,6 +21,7 @@
 ================================================== -->
 <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}"/>
 <link rel="stylesheet" href="{{ asset("css/font-awesome.min.css") }}"/>
+<link rel="stylesheet" href="{{ asset("css/magnific-popup.css") }}"/>
 <link rel="stylesheet" href="{{ asset("css/style-admin.css") }}"/>
 
 <!-- Favicons
@@ -33,6 +34,7 @@
 <script type="text/javascript" src="{{ asset("js/helpers/bootstrap.min.js") }}"></script>
 
 <script type="text/javascript" src="{{ asset("js/jquery/plugins/jquery.yaar.min.js") }}"></script>
+<script type="text/javascript" src="{{ asset("js/jquery/plugins/jquery.magnific-popup.min.js") }}"></script>
 
 <script type="text/javascript" src="{{ asset("js/helpers/Helpers.js") }}"></script>
 <script type="text/javascript" src="{{ asset("js/admin.js") }}"></script>

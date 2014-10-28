@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration {
             $table->string('name');
             $table->string('slug');
             $table->text('desc');
+            $table->string('image')->nullable();
             $table->integer('stock')->unsigned();
             $table->decimal('price');
             $table->timestamps();

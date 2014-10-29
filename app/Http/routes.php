@@ -124,6 +124,7 @@
 
     get( 'products', [ 'as' => 'products.index', 'uses' => 'App\Http\Controllers\Shop\ProductsController@index' ] );
     get( 'product/{product}', [ 'as' => 'products.detail', 'uses' => 'App\Http\Controllers\Shop\ProductsController@show' ] );
+    post( 'shopping-cart/added-to-cart', [ 'as' => 'cart.added-to-cart', 'uses' => 'App\Http\Controllers\Shop\CartController@addedToCart' ] );
 
 
     /*

@@ -191,7 +191,7 @@
         {
             $path = public_path().'/uploads/products/'.$product->id;
 
-            if (  $this->filesystem->deleteDirectory($path) && $this->product->destroy( $product->id ))
+            if (  $this->filesystem->deleteDirectory($path) and $this->product->destroy( $product->id ))
             {
                 $this->log->info( "Product deleted:\n\n ".var_export( $product->toArray(), true ) );
 
@@ -206,10 +206,10 @@
 
 
             $slug      = $this->_slugify( $product[ "name" ] );
-            $test_slug = ( isset( $product[ "slug" ] ) && !empty( $product[ "slug" ] ) ) ? $product[ "slug" ] : $slug;
+            $test_slug = ( isset( $product[ "slug" ] ) and !empty( $product[ "slug" ] ) ) ? $product[ "slug" ] : $slug;
 
             $i = 0;
-            while ( $this->product->whereSlug( $test_slug )->first() )
+            while ( $this->slugExist( $product, $test_slug ) )
             {
                 $test_slug = $slug."-".++$i;
             }
@@ -217,5 +217,17 @@
             $product[ "slug" ] = $test_slug;
 
             return $product;
+        }
+
+        /**
+         * @param $test_slug
+         *
+         * @return mixed
+         */
+        private function slugExist( $product, $test_slug )
+        {
+            $test_product = $this->product->whereSlug( $test_slug );
+            if( isset($product["id"]) ) $test_product = $test_product->where("id", "!=", $product["id"]);
+            return $test_product->first();
         }
     }

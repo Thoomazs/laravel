@@ -178,7 +178,7 @@
             $test_slug = ( isset( $category[ "slug" ] ) && !empty( $category[ "slug" ] ) ) ? $category[ "slug" ] : $slug;
 
             $i = 0;
-            while ( $this->category->whereSlug( $test_slug )->first() )
+            while ( $this->slugExist( $category, $test_slug ) )
             {
                 $test_slug = $slug."-".++$i;
             }
@@ -186,5 +186,12 @@
             $category[ "slug" ] = $test_slug;
 
             return $category;
+        }
+
+        private function slugExist( $category, $test_slug )
+        {
+            $test_category = $this->category->whereSlug( $test_slug );
+            if( isset($category["id"]) ) $test_category = $test_category->where("id", "!=", $category["id"]);
+            return $test_category->first();
         }
     }
